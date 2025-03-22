@@ -12,12 +12,12 @@ import {
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import { Label } from '@/components/ui/label';
-import { loginMutation } from './queryLogin';
+import { LoginMutation } from './queryLogin';
 import Link from 'next/link';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const login = loginMutation(setFormData);
+  const login = LoginMutation(setFormData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

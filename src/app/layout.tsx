@@ -5,9 +5,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata = {
-  title: 'Next.js App Router + NextAuth + Tailwind CSS',
-  description:
-    'A user admin dashboard configured with Next.js, Postgres, NextAuth, Tailwind CSS, TypeScript, and Prettier.'
+  title: 'Dukanda App - Agents of Tourism',
+  description: 'Dukanda App is a platform that connects tourists with local guides, providing a unique experience for both.',
 };
 
 export default function RootLayout({

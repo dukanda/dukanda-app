@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import { Label } from '@/components/ui/label';
-import { registerMutation } from './queryRegister';
+import { RegisterMutation } from './queryRegister';
 import Link from 'next/link';
 
 export default function Register() {
@@ -22,7 +22,7 @@ export default function Register() {
     name: '',
     phoneNumber: '',
   });
-  const register = registerMutation(setFormData);
+  const register = RegisterMutation(setFormData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

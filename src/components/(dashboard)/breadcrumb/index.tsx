@@ -1,4 +1,4 @@
-
+"use client";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,25 +8,34 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+const routes = [
+  { name: 'Dashboard', href: '/' },
+];
+
 export function DashboardBreadcrumb() {
+  const path = usePathname();
+
+  const activeRoutes = routes.filter(route => path.includes(route.href));
+
   return (
     <Breadcrumb className="hidden md:flex">
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="#">Dashboard</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="#">Products</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>All Products</BreadcrumbPage>
-        </BreadcrumbItem>
+        {activeRoutes.map((route, index) => (
+          <BreadcrumbItem key={route.href}>
+            {index < activeRoutes.length - 1 ? (
+              <>
+                <BreadcrumbLink asChild>
+                  <Link href={route.href} className='text-md font-bold'>{route.name}</Link>
+                </BreadcrumbLink>
+                <BreadcrumbSeparator />
+              </>
+            ) : (
+              <BreadcrumbPage>{route.name}</BreadcrumbPage>
+            )}
+          </BreadcrumbItem>
+        ))}
       </BreadcrumbList>
     </Breadcrumb>
   );

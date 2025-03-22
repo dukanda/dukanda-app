@@ -30,19 +30,15 @@ export async function DropdownMenuUser() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem>Perfil</DropdownMenuItem>
         <DropdownMenuSeparator />
           <DropdownMenuItem>
             <form
             >
-              <button type="submit">Sign Out</button>
+              <button type="submit">Sair</button>
             </form>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/login">Sign In</Link>
           </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

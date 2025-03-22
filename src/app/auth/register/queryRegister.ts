@@ -3,7 +3,7 @@ import { authRoutes } from "@/api/routes/Auth/index.routes";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 
-export const registerMutation = (setFormData: React.Dispatch<React.SetStateAction<{ email: string; password: string; name: string; phoneNumber: string }>>) => {
+export const RegisterMutation = (setFormData: React.Dispatch<React.SetStateAction<{ email: string; password: string; name: string; phoneNumber: string }>>) => {
   const { toast } = useToast();
 
   const register = useMutation({
@@ -15,6 +15,7 @@ export const registerMutation = (setFormData: React.Dispatch<React.SetStateActio
       toast({
         title: 'Registro bem-sucedido',
         description: 'Você foi registrado com sucesso.',
+        duration: 2000,
       });
       setFormData({ email: '', password: '', name: '', phoneNumber: '' });
     },
@@ -22,6 +23,7 @@ export const registerMutation = (setFormData: React.Dispatch<React.SetStateActio
       toast({
         title: 'Erro no registro',
         description: 'Ocorreu um erro ao tentar registrar sua conta.',
+        duration: 2000,
       });
     },
   });

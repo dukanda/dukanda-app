@@ -34,10 +34,10 @@ export function DesktopNav() {
           <span className="sr-only">Acme Inc</span>
         </Link>
 
-        <NavItem href="#" label="Dashboard">
+        <NavItem href="/" label="Dashboard">
           <Home className="h-5 w-5" />
         </NavItem>
-
+        {/* 
         <NavItem href="#" label="Orders">
           <ShoppingCart className="h-5 w-5" />
         </NavItem>
@@ -52,7 +52,7 @@ export function DesktopNav() {
 
         <NavItem href="#" label="Analytics">
           <LineChart className="h-5 w-5" />
-        </NavItem>
+        </NavItem> */}
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
         <Tooltip>
