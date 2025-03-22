@@ -17,7 +17,7 @@ import Link from 'next/link';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const login = loginMutation();
+  const login = loginMutation(setFormData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,9 +25,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
     await login.mutate(formData);
-    setFormData({ email: '', password: '' });
   };
   return (
     <div className="min-h-screen flex flex-col gap-5 px-2 md:flex-row justify-center md:justify-between items-center md:items-center md:px-[20%]">

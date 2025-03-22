@@ -22,7 +22,7 @@ export default function Register() {
     name: '',
     phoneNumber: '',
   });
-  const register = registerMutation();
+  const register = registerMutation(setFormData);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,9 +30,7 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
     await register.mutate(formData);
-    setFormData({ email: '', password: '', name: '', phoneNumber: '' });
   };
 
   return (

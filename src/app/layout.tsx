@@ -2,6 +2,7 @@ import QueryProvider from '@/module/tanstack-query-config/queryClientProvider';
 import './globals.css';
 
 import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata = {
   title: 'Next.js App Router + NextAuth + Tailwind CSS',
@@ -19,6 +20,7 @@ export default function RootLayout({
       <QueryProvider>
         <body className="flex min-h-screen w-full flex-col">{children}</body>
         <Analytics />
+        <Toaster />
       </QueryProvider>
     </html>
   );
