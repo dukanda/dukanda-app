@@ -2,9 +2,11 @@ import Link from 'next/link';
 import {
   Home,
   LineChart,
+  // MapPlus,
   Package,
   Package2,
   PanelLeft,
+  PanelTopDashed,
   Settings,
   ShoppingCart,
   Users2
@@ -18,13 +20,13 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { NavItem } from '@/components/(dashboard)/sidebar/nav-item';
-import { VercelLogo } from '../../icons';
+import { MapPlus, VercelLogo } from '../../icons';
 
 
 
 export function DesktopNav() {
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-white sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <Link
           href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-postgres-react-nextjs"
@@ -35,13 +37,18 @@ export function DesktopNav() {
         </Link>
 
         <NavItem href="/" label="Dashboard">
-          <Home className="h-5 w-5" />
-        </NavItem>
-        {/* 
-        <NavItem href="#" label="Orders">
-          <ShoppingCart className="h-5 w-5" />
+          <Home className="h-5 w-5 text-black" />
         </NavItem>
 
+        <NavItem href="/agency" label="Agência">
+          <PanelTopDashed className="h-5 w-5 text-black"/>
+        </NavItem>
+
+        <NavItem href="/tours" label="Passeios">
+          <MapPlus className="h-5 w-5 text-black"/>
+        </NavItem>
+
+        {/* 
         <NavItem href="/" label="Products">
           <Package className="h-5 w-5" />
         </NavItem>

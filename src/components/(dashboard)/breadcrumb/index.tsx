@@ -12,6 +12,8 @@ import { usePathname } from 'next/navigation';
 
 const routes = [
   { name: 'Dashboard', href: '/' },
+  { name: 'Agência', href: '/agency' },
+  { name: 'Passeios', href: '/tours' }
 ];
 
 export function DashboardBreadcrumb() {
@@ -27,7 +29,7 @@ export function DashboardBreadcrumb() {
             {index < activeRoutes.length - 1 ? (
               <>
                 <BreadcrumbLink asChild>
-                  <Link href={route.href} className='text-md font-bold'>{route.name}</Link>
+                  <Link href={route.href} className='text-md font-bold text-gray-600'>{route.name}</Link>
                 </BreadcrumbLink>
                 <BreadcrumbSeparator />
               </>
