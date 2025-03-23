@@ -1,5 +1,4 @@
 'use client';
-
 import {
   TableHead,
   TableRow,
@@ -18,7 +17,6 @@ import {
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 
 export function ProductsTable({
   offset,
