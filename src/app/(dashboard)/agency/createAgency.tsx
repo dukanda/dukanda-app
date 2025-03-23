@@ -15,25 +15,16 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ImageUploader } from "@/components/image-loader";
+import { AgencyMutation } from "./queryAgency";
 
 interface CreateAgencyProps {
   children?: React.ReactNode;
 }
 
-interface AgencyData {
-  userId: string;
-  name: string;
-  description: string;
-  contactEmail: string;
-  contactPhone: string;
-  address: string;
-  logoUrl?: string;
-  tourAgencyTypeId: number;
-}
-
 export const CreateAgency = ({ children }: CreateAgencyProps) => {
+  const createAgency = AgencyMutation();
   const [image, setImage] = useState("");
-  const [formData, setFormData] = useState<AgencyData>({
+  const [formData, setFormData] = useState<TourAgencyToCreate>({
     userId: "5ae3e69a-d719-46a3-8b03-e32424760f89",
     name: "",
     description: "",
@@ -42,6 +33,8 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
     address: "",
     logoUrl: "",
     tourAgencyTypeId: 0,
+    agencyType: "", // Add a default value for agencyType
+    toursCount: 0,  // Add a default value for toursCount
   });
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -51,7 +44,7 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Simular envio ao backend
@@ -60,6 +53,7 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
       logoUrl: image ? image : "",
     };
     console.log("Dados enviados:", payload);
+    await createAgency.mutate(payload);
   };
 
   return (
@@ -162,7 +156,7 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
           {/* Logo da Agência */}
           <div>
             <Label htmlFor="logo">Logo da Agência</Label>
-            <ImageUploader setImageUrl={setImage}/>
+            <ImageUploader setImageUrl={setImage} />
           </div>
 
           {/* Botão de Submissão */}

@@ -17,6 +17,7 @@ export default function Agency() {
     endereco: "",
     tipo: "",
     descricao: "",
+    toursCount: 0,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
