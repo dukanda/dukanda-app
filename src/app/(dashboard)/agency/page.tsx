@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,14 +6,40 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Plus } from "lucide-react";
 import Image from "next/image";
-
+import { CreateAgency } from "./createAgency";
+import { useState } from "react";
 
 export default function Agency() {
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    contacto: "",
+    endereco: "",
+    tipo: "",
+    descricao: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    console.log("Dados da Agência:", formData);
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <Button className="bg-green-700 hover:bg-green-600 flex gap-4"> <Plus size={20} /> Criar Agência</Button>
+        <CreateAgency>
+          <Button
+            className="bg-green-700 hover:bg-green-600 flex gap-4"
+            onClick={handleSubmit}
+          >
+            <Plus size={20} />
+            Criar Agência
+          </Button>
+        </CreateAgency>
       </div>
 
       <Card className="h-full flex justify-between pb-5">
@@ -25,44 +52,63 @@ export default function Agency() {
             <div className="w-full flex flex-col gap-3">
               <div>
                 <Label className="text-md font-semibold text-gray-600">Nome</Label>
-                <Input placeholder="Nome da Agência" disabled />
+                <Input
+                  name="nome"
+                  placeholder="Nome da Agência"
+                  value={formData.nome}
+                  onChange={handleInputChange}
+                />
               </div>
               <div>
                 <Label className="text-md font-semibold text-gray-600">Email</Label>
-                <Input placeholder="Email da Agência" disabled />
+                <Input
+                  name="email"
+                  placeholder="Email da Agência"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                />
               </div>
               <div>
                 <Label className="text-md font-semibold text-gray-600">Contacto</Label>
-                <Input placeholder=" Contacto da Agência" disabled />
+                <Input
+                  name="contacto"
+                  placeholder="Contacto da Agência"
+                  value={formData.contacto}
+                  onChange={handleInputChange}
+                />
               </div>
               <div>
                 <Label className="text-md font-semibold text-gray-600">Endereço</Label>
-                <Input placeholder=" Endereço da Agência" disabled />
+                <Input
+                  name="endereco"
+                  placeholder="Endereço da Agência"
+                  value={formData.endereco}
+                  onChange={handleInputChange}
+                />
               </div>
               <div>
                 <Label className="text-md font-semibold text-gray-600">Tipo de Agência</Label>
-                <Input placeholder=" Tipo da Agência" disabled />
+                <Input
+                  name="tipo"
+                  placeholder="Tipo da Agência"
+                  value={formData.tipo}
+                  onChange={handleInputChange}
+                />
               </div>
             </div>
-            <div className=" w-full">
+            <div className="w-full">
               <Label className="text-md font-semibold text-gray-600">Descrição</Label>
-              <Textarea placeholder="Descrição da Agência" disabled className=" min-h-[345px]" />
+              <Textarea
+                name="descricao"
+                placeholder="Descrição da Agência"
+                value={formData.descricao}
+                onChange={handleInputChange}
+                className="min-h-[345px]"
+              />
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-/*
-"name": "string",
-    "description": "string",
-    "contactEmail": "string",
-    "contactPhone": "string",
-    "address": "string",
-    "logoUrl": "string",
-    "tourAgencyTypeId": 0,
-    "agencyType": "string",
-    "toursCount": 0
-
-    */
