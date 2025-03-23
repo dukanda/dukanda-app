@@ -64,7 +64,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           {/* Date Range (StartDate and EndDate) */}
           <div>
             <Label>Datas do Passeio</Label>
-            <DatePickerWithRange />
+            <DatePickerWithRange  />
             {/* <Popover>
               <PopoverTrigger asChild>
                 <Button
