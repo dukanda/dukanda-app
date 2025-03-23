@@ -18,7 +18,8 @@ export const ToursMutation = () => {
         duration: 2000,
       });
     },
-    onError: () => {
+    onError: (data) => {
+      console.log(data);
       toast({
         title: 'Erro',
         description: ' Ocorreu um erro ao criar a tour.',

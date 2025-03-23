@@ -3,15 +3,15 @@ import { api } from "@/api/axios.config";
 class ToursRoutes {
   async createTourAgency(formData: TourToCreate) {
     const formDataToSend = new FormData();
-    formDataToSend.append("AgencyId", formData.agencyId);
-    formDataToSend.append("CityId", formData.city);
-    formDataToSend.append("TourTypeIds", formData.tourTypeIds.toString());
-    formDataToSend.append("EndDate", formData.endDate);
-    formDataToSend.append("StartDate", formData.startDate);
-    formDataToSend.append("Cover", formData.cover);
+    formDataToSend.append("AgencyId", formData.AgencyId);
+    formDataToSend.append("CityId", formData.CityId);
+    formDataToSend.append("TourTypeIds", formData.TourTypeIds.toString());
+    formDataToSend.append("EndDate", formData.EndDate);
+    formDataToSend.append("StartDate", formData.StartDate);
+    formDataToSend.append("Cover", formData.Cover);
     formDataToSend.append("BasePrice", formData.basePrice.toString());
-    formDataToSend.append("Title", formData.title);
-    formDataToSend.append("Description", formData.description);
+    formDataToSend.append("Title", formData.Title);
+    formDataToSend.append("Description", formData.Description);
 
     const response = await api.post("/Tours", formDataToSend, {
       headers: {

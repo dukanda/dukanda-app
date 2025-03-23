@@ -1,12 +1,12 @@
 
-interface TourToCreate{
-  agencyId: string;
-  title: string;
-  description: string;
+interface TourToCreate {
+  AgencyId: string;
+  Title: string;
+  Description: string;
   basePrice: number;
-  startDate: string;
-  endDate: string;
-  city: string;
-  cover: string;
-  tourTypeIds: number[];
+  StartDate: string;
+  EndDate: string;
+  CityId: string;
+  Cover: string;
+  TourTypeIds: number[];
 }
