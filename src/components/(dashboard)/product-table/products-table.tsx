@@ -26,8 +26,8 @@ export function ProductsTable({
   offset: number;
   totalProducts: number;
 }) {
-  let router = useRouter();
-  let productsPerPage = 5;
+  const router = useRouter();
+  const productsPerPage = 5;
 
   function prevPage() {
     router.back();
