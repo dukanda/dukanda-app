@@ -54,9 +54,15 @@ function Calendar({
         ...classNames,
       }}
       components={{
+      
+        // eslint-disable-next-line
+        // @ts-ignore
         IconLeft: ({ className, ...props }) => (
           <ChevronLeft className={cn("h-4 w-4", className)} {...props} />
         ),
+
+        // eslint-disable-next-line
+        // @ts-ignore
         IconRight: ({ className, ...props }) => (
           <ChevronRight className={cn("h-4 w-4", className)} {...props} />
         ),

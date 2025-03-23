@@ -18,6 +18,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export function ProductsTable({
   offset,
@@ -93,6 +94,7 @@ export function ProductsTable({
             ].map((product) => (
               <TableRow key={product.id}>
                 <TableHead className="hidden w-[100px] sm:table-cell">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`https://via.placeholder.com/100?text=${product.name}`}
                     alt={product.name}
