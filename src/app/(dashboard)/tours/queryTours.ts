@@ -1,7 +1,8 @@
 "use client";
+import { citiesRoutes } from "@/api/routes/Cities/index.routes";
 import { toursRoutes } from "@/api/routes/Tours";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const ToursMutation = () => {
   const { toast } = useToast();
@@ -28,5 +29,12 @@ export const ToursMutation = () => {
     },
   });
 
-  return createTours;
+  const getCities = useQuery({
+    queryKey: ['cities'],
+    queryFn: async () => {
+      return await citiesRoutes.getAllCities();
+    },
+  })
+
+  return {createTours, getCities};
 };

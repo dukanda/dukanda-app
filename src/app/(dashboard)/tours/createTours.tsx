@@ -18,6 +18,8 @@ import { ImageUploader } from "@/components/image-loader";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ToursMutation } from "./queryTours";
 import { addDays } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { citiesRoutes } from "@/api/routes/Cities/index.routes";
 
 interface CreateToursProps {
   children?: React.ReactNode;
@@ -35,11 +37,18 @@ export const CreateTours = ({ children }: CreateToursProps) => {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(addDays(new Date(), 10));
 
+  const getCities = useQuery({
+    queryKey: ['cities'],
+    queryFn: async () => {
+      return await citiesRoutes.getAllCities();
+    },
+  })
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted!", { title, description, basePrice, cityId, tourTypeIds, image, startDate, endDate });
 
-    await toursMutation.mutate({
+    await toursMutation.createTours.mutate({
       AgencyId: "1",
       Title: title,
       Description: description,
@@ -71,7 +80,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
               placeholder="Digite o título do tour"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              disabled={toursMutation.isPending}
+              disabled={toursMutation.createTours.isPending}
             />
           </div>
 
@@ -84,7 +93,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
               placeholder="Descreva o passeio..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              disabled={toursMutation.isPending}
+              disabled={toursMutation.createTours.isPending}
             />
           </div>
 
@@ -99,7 +108,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
               placeholder="0.00"
               value={basePrice}
               onChange={(e) => setBasePrice(e.target.value)}
-              disabled={toursMutation.isPending}
+              disabled={toursMutation.createTours.isPending}
             />
           </div>
 
@@ -117,14 +126,16 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           {/* CityId */}
           <div>
             <Label htmlFor="cityId">Cidade</Label>
-            <Select onValueChange={(value) => setCityId(Number(value))} disabled={toursMutation.isPending}>
+            <Select onValueChange={(value) => setCityId(Number(value))} disabled={toursMutation.createTours.isPending}>
               <SelectTrigger className="w-full ring-0 focus:ring-0 focus-visible:ring-0 outline-none">
                 <SelectValue placeholder="Selecione a cidade" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">Luanda</SelectItem>
-                <SelectItem value="2">Benguela</SelectItem>
-                <SelectItem value="3">Huambo</SelectItem>
+                {getCities.data?.data.items.map((city) => (
+                  <SelectItem key={city.id} value={city.id.toString()}>
+                    {city.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -132,7 +143,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           {/* TourTypeIds */}
           <div>
             <Label htmlFor="tourTypeIds">Tipos de passeio</Label>
-            <Select onValueChange={(value) => setTourTypeIds(Number(value))} disabled={toursMutation.isPending}>
+            <Select onValueChange={(value) => setTourTypeIds(Number(value))} disabled={toursMutation.createTours.isPending}>
               <SelectTrigger className="w-full ring-0 focus:ring-0 focus-visible:ring-0 outline-none">
                 <SelectValue placeholder="Selecione o tipo de passeio" />
               </SelectTrigger>
@@ -147,12 +158,12 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           {/* Cover Image */}
           <div>
             <Label htmlFor="cover">Imagem de Capa</Label>
-            <ImageUploader setImageUrl={setImage} isLoading={toursMutation.isPending} />
+            <ImageUploader setImageUrl={setImage} isLoading={toursMutation.createTours.isPending} />
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" disabled={toursMutation.isPending} className="w-full bg-orange-600 hover:bg-orange-500">
-           {toursMutation.isPending ? "Criando..." : "Criar Tour"}
+          <Button type="submit" disabled={toursMutation.createTours.isPending} className="w-full bg-orange-600 hover:bg-orange-500">
+            {toursMutation.createTours.isPending ? "Criando..." : "Criar Tour"}
           </Button>
         </form>
       </DialogContent>
