@@ -41,9 +41,9 @@ export const BookingsTable = ({ status }: BookingsTableProps) => {
     : mockBookings.filter((booking) => booking.status === status);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200">
-        <thead>
+    <div className="overflow-x-auto rounded-lg mt-5 ">
+      <table className="min-w-full bg-white border border-gray-200 rounded-md">
+        <thead className="">
           <tr>
             <th className="p-4 text-left border-b">Nome</th>
             <th className="p-4 text-left border-b">Tour</th>

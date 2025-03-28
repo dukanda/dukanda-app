@@ -8,25 +8,25 @@ export default async function BookingsPage() {
     <Tabs defaultValue="all">
       <div className="flex items-center">
         {/* Tabs para filtrar os agendamentos */}
-        <TabsList>
-          <TabsTrigger value="all">Todos</TabsTrigger>
-          <TabsTrigger value="active">Ativos</TabsTrigger>
-          <TabsTrigger value="pending">Pendentes</TabsTrigger>
-          <TabsTrigger value="canceled" className="hidden sm:flex">
+        <TabsList className="border">
+          <TabsTrigger value="all" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">Todos</TabsTrigger>
+          <TabsTrigger value="active" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">Ativos</TabsTrigger>
+          <TabsTrigger value="pending" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">Pendentes</TabsTrigger>
+          <TabsTrigger value="canceled" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
             Cancelados
           </TabsTrigger>
         </TabsList>
 
         {/* Ações de Exportar e Adicionar */}
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" variant="outline" className="h-8 gap-1">
-            <File className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+          <Button size="sm" variant="outline" className="h-10 bg-orange-500 hover:bg-orange-600 gap-1">
+            <File className="h-4 w-4 text-white" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap text-white">
               Exportar
             </span>
           </Button>
-          <Button size="sm" className="h-8 gap-1">
-            <PlusCircle className="h-3.5 w-3.5" />
+          <Button size="sm" className="h-10 bg-green-700 hover:bg-green-600 gap-1">
+            <PlusCircle className="h-4 w-4" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Adicionar Agendamento
             </span>

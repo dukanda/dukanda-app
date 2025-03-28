@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 
 export async function DropdownMenuUser() {
 
@@ -31,14 +32,18 @@ export async function DropdownMenuUser() {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Perfil</DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <Link href={"/profile"} passHref className='cursor-pointer'>
           <DropdownMenuItem>
-            <form
-            >
-              <button type="submit">Sair</button>
-            </form>
+            Perfil
           </DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <form
+          >
+            <button type="submit">Sair</button>
+          </form>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

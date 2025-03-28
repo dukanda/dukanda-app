@@ -13,7 +13,8 @@ import { usePathname } from 'next/navigation';
 const routes = [
   { name: 'Dashboard', href: '/' },
   { name: 'Agência', href: '/agency' },
-  { name: 'Passeios', href: '/tours' }
+  { name: 'Passeios', href: '/tours' },
+  { name: "Perfil", href:'/profile' }
 ];
 
 export function DashboardBreadcrumb() {
