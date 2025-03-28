@@ -2,6 +2,7 @@
 import { authRoutes } from "@/api/routes/Auth/index.routes";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
+import { useAuthStore } from "@/module/zustand-auth-store";
 
 export const LoginMutation = (setFormData: React.Dispatch<React.SetStateAction<{ email: string; password: string }>>) => {
   const { toast } = useToast();
@@ -11,7 +12,9 @@ export const LoginMutation = (setFormData: React.Dispatch<React.SetStateAction<{
       return await authRoutes.loginUser(formData);
     },
     onSuccess: (data) => {
-      console.log(data);
+      const { token, refreshToken, user } = data;
+      // Update Zustand auth store
+      useAuthStore.getState().login(token, refreshToken, user);
       toast({
         title: 'Login bem-sucedido',
         description: 'Você foi logado com sucesso.',

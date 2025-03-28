@@ -26,3 +26,17 @@ interface IToken {
   token: string;
   refreshToken: string;
 }
+
+interface ILoginResponse {
+  token: string;
+  refreshToken: string;
+  user: {
+    id: string;
+    email: string;
+    avatarUrl: string;
+    name: string;
+    lastName: string;
+    phoneNumber: string;
+    created: string;
+  };
+}

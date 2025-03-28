@@ -1,16 +1,18 @@
 import { api } from "@/api/axios.config";
 
+export 
 
 class AuthRoutes {
   public static AUTH = "/Auth";
 
-  async registerUser(user:IRegister) {
+  async registerUser(user: IRegister) {
     const response = await api.post(`${AuthRoutes.AUTH}/register`, user);
     return response.data;
   }
 
   async loginUser({ email, password }: ILogin) {
-    const response = await api.post(`${AuthRoutes.AUTH}/login`, { email, password });
+    console.log("Login data:", { email, password });
+    const response = await api.post<ILoginResponse>(`${AuthRoutes.AUTH}/login`, { email, password });
     return response.data;
   }
 }
