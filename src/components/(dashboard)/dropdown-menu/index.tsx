@@ -33,17 +33,16 @@ export async function DropdownMenuUser() {
         <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link href={"/profile"} passHref className='cursor-pointer'>
-          <DropdownMenuItem>
+          <DropdownMenuItem className='cursor-pointer'>
             Perfil
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <form
-          >
-            <button type="submit">Sair</button>
-          </form>
-        </DropdownMenuItem>
+        <Link href={"/auth/login"} passHref className='cursor-pointer'>
+          <DropdownMenuItem className='cursor-pointer'>
+            Sair
+          </DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

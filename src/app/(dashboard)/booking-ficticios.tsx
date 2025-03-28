@@ -1,3 +1,5 @@
+import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
+
 interface BookingsTableProps {
   status: string;
 }
@@ -41,43 +43,43 @@ export const BookingsTable = ({ status }: BookingsTableProps) => {
     : mockBookings.filter((booking) => booking.status === status);
 
   return (
-    <div className="overflow-x-auto rounded-lg mt-5 ">
-      <table className="min-w-full bg-white border border-gray-200 rounded-md">
-        <thead className="">
-          <tr>
-            <th className="p-4 text-left border-b">Nome</th>
-            <th className="p-4 text-left border-b">Tour</th>
-            <th className="p-4 text-left border-b">Data</th>
-            <th className="p-4 text-left border-b">Bilhetes</th>
-            <th className="p-4 text-left border-b">Pacote</th>
-            <th className="p-4 text-left border-b">Total (kz)</th>
-            <th className="p-4 text-left border-b">Status</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="rounded-[12px] mt-5   ">
+      <Table className="min-w-full bg-white border border-gray-200 rounded-md ">
+        <TableHeader className="rounded-md">
+          <TableRow>
+            <TableHead className="p-4 text-left border-b">Nome</TableHead>
+            <TableHead className="p-4 text-left border-b">Tour</TableHead>
+            <TableHead className="p-4 text-left border-b">Data</TableHead>
+            <TableHead className="p-4 text-left border-b">Bilhetes</TableHead>
+            <TableHead className="p-4 text-left border-b">Pacote</TableHead>
+            <TableHead className="p-4 text-left border-b">Total (kz)</TableHead>
+            <TableHead className="p-4 text-left border-b">Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {filteredBookings.length > 0 ? (
             filteredBookings.map((booking) => (
-              <tr key={booking.id} className="hover:bg-gray-100">
-                <td className="p-4 border-b">{booking.name}</td>
-                <td className="p-4 border-b">{booking.tour}</td>
-                <td className="p-4 border-b">{booking.date}</td>
-                <td className="p-4 border-b">{booking.tickets}</td>
-                <td className="p-4 border-b">{booking.package}</td>
-                <td className="p-4 border-b"> {booking.total.toFixed(2)} kz</td>
-                <td className={`p-4 border-b ${getStatusColor(booking.status)}`}>
+              <TableRow key={booking.id} className="hover:bg-gray-100">
+                <TableCell className="p-4 border-b">{booking.name}</TableCell>
+                <TableCell className="p-4 border-b">{booking.tour}</TableCell>
+                <TableCell className="p-4 border-b">{booking.date}</TableCell>
+                <TableCell className="p-4 border-b">{booking.tickets}</TableCell>
+                <TableCell className="p-4 border-b">{booking.package}</TableCell>
+                <TableCell className="p-4 border-b"> {booking.total.toFixed(2)} kz</TableCell>
+                <TableCell className={`p-4 border-b ${getStatusColor(booking.status)}`}>
                   {booking.status}
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))
           ) : (
-            <tr>
-              <td colSpan={7} className="p-4 text-center text-gray-500">
+            <TableRow>
+              <TableCell colSpan={7} className="p-4 text-center text-gray-500">
                 Nenhum agendamento encontrado.
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           )}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 };

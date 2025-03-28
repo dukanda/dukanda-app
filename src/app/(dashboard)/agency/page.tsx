@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { Plus } from "lucide-react";
+import { Pen, Plus } from "lucide-react";
 import Image from "next/image";
 import { CreateAgency } from "./createAgency";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export default function Agency() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div>
+      <div className="flex flex-col gap-3 w-max md:flex-row">
         <CreateAgency>
           <Button
             className="bg-green-700 hover:bg-green-600 flex gap-4"
@@ -41,15 +41,24 @@ export default function Agency() {
             Criar Agência
           </Button>
         </CreateAgency>
+        <CreateAgency>
+          <Button
+            className="bg-green-700 hover:bg-green-600 flex gap-4"
+            onClick={handleSubmit}
+          >
+            <Pen size={20} />
+            Editar Informação
+          </Button>
+        </CreateAgency>
       </div>
 
-      <Card className="h-full flex justify-between pb-5">
+      <Card className="h-full flex flex-col lg:flex-row justify-between pb-5">
         <CardHeader>
           <Image src="/bus.png" alt="Agência" width={200} height={200} className="rounded-full" />
         </CardHeader>
-        <CardContent className="w-[70%] h-full py-5">
+        <CardContent className="w-full lg:w-[70%] h-full py-5">
           <CardTitle className="text-xl text-gray-500 mb-5">Informação da Agência</CardTitle>
-          <div className="flex gap-2">
+          <div className="flex flex-col md:flex-row gap-2 w-full">
             <div className="w-full flex flex-col gap-3">
               <div>
                 <Label className="text-md font-semibold text-gray-600">Nome</Label>

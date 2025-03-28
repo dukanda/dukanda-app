@@ -35,6 +35,8 @@ export const CreateTours = ({ children }: CreateToursProps) => {
   const [description, setDescription] = useState("");
   const [basePrice, setBasePrice] = useState("");
   const [startDate, setStartDate] = useState<Date>(new Date());
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
   const [endDate, setEndDate] = useState<Date>(addDays(new Date(), 10));
 
   const getCities = useQuery({
@@ -118,6 +120,8 @@ export const CreateTours = ({ children }: CreateToursProps) => {
             <DatePickerWithRange
               onDateChange={({ startDate, endDate }) => {
                 setStartDate(startDate || new Date());
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
                 setEndDate(endDate || addDays(new Date(), 10));
               }}
             />
