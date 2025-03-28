@@ -62,15 +62,6 @@ export default function Profile() {
                     disabled={!!userData}
                   />
                 </div>
-                {/* <div>
-                  <Label className="text-md font-semibold text-gray-600">Endereço</Label>
-                  <Input
-                    name="endereco"
-                    placeholder="Endereço da Agência"
-                    value={userData?.address || ""}
-                    disabled={!!userData}
-                  />
-                </div> */}
               </div>
             </div>
           </CardContent>
