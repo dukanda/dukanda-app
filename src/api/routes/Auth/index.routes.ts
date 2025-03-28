@@ -10,6 +10,7 @@ class AuthRoutes {
   }
 
   async loginUser({ email, password }: ILogin) {
+    console.log("Login data:", { email, password });
     const response = await api.post(`${AuthRoutes.AUTH}/login`, { email, password });
     return response.data;
   }
