@@ -15,6 +15,16 @@ class AuthRoutes {
     const response = await api.post<ILoginResponse>(`${AuthRoutes.AUTH}/login`, { email, password });
     return response.data;
   }
+
+  async getUserById(userId: string) {
+    const response = await api.get<IUser>(`${AuthRoutes.AUTH}/users/${userId}`);
+    return response.data;
+  }
+
+  async getCurrentUser() {
+    const response = await api.get<IUser>(`${AuthRoutes.AUTH}/users/me`);
+    return response.data;
+  }
 }
 
 export const authRoutes = new AuthRoutes();

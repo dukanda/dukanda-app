@@ -15,6 +15,7 @@ export const LoginMutation = (setFormData: React.Dispatch<React.SetStateAction<{
       const { token, refreshToken, user } = data;
       // Update Zustand auth store
       useAuthStore.getState().login(token, refreshToken, user);
+      window.location.href = '/';
       toast({
         title: 'Login bem-sucedido',
         description: 'Você foi logado com sucesso.',

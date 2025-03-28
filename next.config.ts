@@ -1,16 +1,10 @@
-export default {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        search: ''
-      },
-      {
-        protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
-        search: ''
-      }
-    ]
-  }
+    domains: ['i5.walmartimages.com','utfs.io','github.com','fakeimg.pl'], // Adicione o domínio aqui
+  },
 };
+
+export default nextConfig;

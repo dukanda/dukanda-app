@@ -1,21 +1,37 @@
-
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
+import { authRoutes } from "@/api/routes/Auth/index.routes";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Profile() {
+  const userLogged = useQuery({
+    queryKey: ['profile'],
+    queryFn: async () => {
+      return await authRoutes.getCurrentUser();
+    },
+  });
+
+  const userData = userLogged.data;
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className=" flex flex-col md:flex-row gap-3 h-full ">
+      <div className="flex flex-col md:flex-row gap-3 h-full">
         <Card className="w-full h-full flex flex-col md:flex-row gap-10">
-          <CardHeader className=" flex items-center">
-            <Image src="/bus.png" alt="Agência" width={200} height={200} className="rounded-full" />
-            <Button  className="bg-green-700 hover:bg-green-600">Editar perfil</Button>
+          <CardHeader className="flex items-center gap-4">
+            <Image
+              src={userData?.avatarUrl || "https://github.com/dukanda.png"}
+              alt="Avatar do usuário"
+              width={200}
+              height={200}
+              className="rounded-full"
+            />
+            <Button className="bg-green-700 hover:bg-green-600">Editar perfil</Button>
           </CardHeader>
-          <CardContent className="py-5 w-full md:w-[400px]" >
+          <CardContent className="py-5 w-full md:w-[400px]">
             <CardTitle className="text-xl text-gray-500 mb-5">Informação</CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full">
               <div className="w-full flex flex-col gap-3">
@@ -24,6 +40,8 @@ export default function Profile() {
                   <Input
                     name="nome"
                     placeholder="Nome da Agência"
+                    value={userData?.name || ""}
+                    disabled={!!userData}
                   />
                 </div>
                 <div>
@@ -31,6 +49,8 @@ export default function Profile() {
                   <Input
                     name="email"
                     placeholder="Email da Agência"
+                    value={userData?.email || ""}
+                    disabled={!!userData}
                   />
                 </div>
                 <div>
@@ -38,26 +58,29 @@ export default function Profile() {
                   <Input
                     name="contacto"
                     placeholder="Contacto da Agência"
+                    value={userData?.phoneNumber || ""}
+                    disabled={!!userData}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <Label className="text-md font-semibold text-gray-600">Endereço</Label>
                   <Input
                     name="endereco"
                     placeholder="Endereço da Agência"
+                    value={userData?.address || ""}
+                    disabled={!!userData}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card className="w-full min-h-full flex flex-col lg:flex-row justify-between pb-5 py-3">
-          <CardHeader className="hidden">
-          </CardHeader>
-          <CardContent className="">
+          <CardHeader className="hidden"></CardHeader>
+          <CardContent>
             <CardTitle className="text-xl text-gray-500 mb-5">Fotos</CardTitle>
-            <div className=" flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3">
               <div className="size-[100px] rounded-md bg-gray-400"></div>
               <div className="size-[100px] rounded-md bg-gray-400"></div>
               <div className="size-[100px] rounded-md bg-gray-400"></div>
@@ -67,46 +90,6 @@ export default function Profile() {
           </CardContent>
         </Card>
       </div>
-
-      {/* <Card className="w-full h-full flex flex-col lg:flex-row justify-between pb-5">
-        <CardHeader className="hidden">
-        </CardHeader>
-        <CardContent className="w-full h-full py-5 ">
-          <CardTitle className="text-xl text-gray-500 mb-5">Informação</CardTitle>
-          <div className="flex flex-col md:flex-row gap-2 w-full">
-            <div className="w-full flex flex-col gap-3">
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Nome</Label>
-                <Input
-                  name="nome"
-                  placeholder="Nome da Agência"
-                />
-              </div>
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Email</Label>
-                <Input
-                  name="email"
-                  placeholder="Email da Agência"
-                />
-              </div>
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Contacto</Label>
-                <Input
-                  name="contacto"
-                  placeholder="Contacto da Agência"
-                />
-              </div>
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Endereço</Label>
-                <Input
-                  name="endereco"
-                  placeholder="Endereço da Agência"
-                />
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card> */}
     </div>
-  )
+  );
 }
