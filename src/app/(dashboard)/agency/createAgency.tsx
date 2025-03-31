@@ -9,13 +9,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ImageUploader } from "@/components/image-loader";
 import { AgencyMutation } from "./queryAgency";
+import { Loader2 } from "lucide-react";
 
 interface CreateAgencyProps {
   children?: React.ReactNode;
@@ -44,98 +50,101 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const payload = {
       ...formData,
-      Logo: image ? image : "",
+      Logo: image || "",
     };
-    console.log("Dados enviados:", payload);
+    console.log("Enviando dados:", payload);
     await createAgency.mutate(payload);
   };
 
   return (
-    <Dialog modal={true}>
+    <Dialog modal>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-full max-w-lg h-[90%] overflow-y-auto [&::-webkit-scrollbar]:hidden">
-        <DialogHeader>
-          <DialogTitle>Criar Nova Agência</DialogTitle>
-          <DialogDescription>Preencha os detalhes abaixo para criar uma nova agência de turismo.</DialogDescription>
+      <DialogContent className="w-full max-w-xl max-h-[95%] p-6 rounded-lg overflow-y-auto [&::-webkit-scrollbar]:hidden">
+        <DialogHeader className="mb-4">
+          <DialogTitle className="text-2xl font-semibold text-gray-800">Criar Nova Agência</DialogTitle>
+          <DialogDescription className="text-gray-500">
+            Preencha os detalhes abaixo para registrar sua agência.
+          </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* Nome */}
-          <div>
-            <Label htmlFor="name">Nome da Agência</Label>
-            <Input
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="Name">Nome da Agência</Label>
+            <input
               id="Name"
               name="Name"
               value={formData.Name}
               onChange={handleInputChange}
               placeholder="Digite o nome da agência"
-              className="focus:ring-0 focus-visible:ring-0 outline-none"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
               disabled={createAgency.isPending}
             />
           </div>
 
           {/* Descrição */}
-          <div>
-            <Label htmlFor="description">Descrição</Label>
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="Description">Descrição</Label>
             <Textarea
               id="Description"
               name="Description"
               value={formData.Description}
               onChange={handleInputChange}
               placeholder="Descreva a agência"
-              className="focus:ring-0 focus-visible:ring-0 outline-none min-h-[100px] max-h-[200px]"
+              className="focus:outline-none focus:ring-2 focus:ring-orange-500 min-h-[120px]"
               disabled={createAgency.isPending}
             />
           </div>
 
-          {/* E-mail de Contato */}
-          <div>
-            <Label htmlFor="contactEmail">E-mail</Label>
-            <Input
-              id="ContactEmail"
-              name="ContactEmail"
-              type="email"
-              value={formData.ContactEmail}
-              onChange={handleInputChange}
-              placeholder="exemplo@empresa.com"
-              className="focus:ring-0 focus-visible:ring-0 outline-none"
-              disabled={createAgency.isPending}
-            />
-          </div>
+          {/* Contato */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="ContactEmail">E-mail</Label>
+              <input
+                id="ContactEmail"
+                name="ContactEmail"
+                type="email"
+                value={formData.ContactEmail}
+                onChange={handleInputChange}
+                placeholder="exemplo@empresa.com"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                disabled={createAgency.isPending}
+              />
+            </div>
 
-          {/* Telefone de Contato */}
-          <div>
-            <Label htmlFor="contactPhone">Telefone de Contato</Label>
-            <Input
-              id="ContactPhone"
-              name="ContactPhone"
-              value={formData.ContactPhone}
-              onChange={handleInputChange}
-              placeholder="Ex. +244 999 999 999"
-              className="focus:ring-0 focus-visible:ring-0 outline-none"
-              disabled={createAgency.isPending}
-            />
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="ContactPhone">Telefone</Label>
+              <input
+                id="ContactPhone"
+                name="ContactPhone"
+                value={formData.ContactPhone}
+                onChange={handleInputChange}
+                placeholder="Ex. +244 999 999 999"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                disabled={createAgency.isPending}
+              />
+            </div>
           </div>
 
           {/* Endereço */}
-          <div>
-            <Label htmlFor="address">Endereço</Label>
-            <Input
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="Address">Endereço</Label>
+            <input
               id="Address"
               name="Address"
               value={formData.Address}
               onChange={handleInputChange}
               placeholder="Rua, cidade, província"
-              className="focus:ring-0 focus-visible:ring-0 outline-none"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
               disabled={createAgency.isPending}
             />
           </div>
 
-          <div>
-            <Label htmlFor="tourAgencyTypeId">Tipo de Agência</Label>
+          {/* Tipo de Agência */}
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="TourAgencyTypeId">Tipo de Agência</Label>
             <Select
               onValueChange={(value) =>
                 setFormData((prev) => ({
@@ -144,7 +153,7 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
                 }))
               }
             >
-              <SelectTrigger className="w-full ring-0 focus:ring-0 focus-visible:ring-0 outline-none">
+              <SelectTrigger className="w-full ring-0 focus:ring-2 focus:ring-orange-500">
                 <SelectValue placeholder="Selecione o tipo" />
               </SelectTrigger>
               <SelectContent>
@@ -154,15 +163,19 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
             </Select>
           </div>
 
-          {/* Logo da Agência */}
-          <div>
+          {/* Logo */}
+          <div className="flex flex-col gap-2">
             <Label htmlFor="logo">Logo da Agência</Label>
             <ImageUploader setImageUrl={setImage} />
           </div>
 
-          {/* Botão de Submissão */}
-          <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-500">
-            { createAgency.isPending ? "Criando..." : "Criar Agência"}
+          {/* Botão de envio */}
+          <Button
+            type="submit"
+            className="w-full bg-orange-600 hover:bg-orange-500 transition-all flex items-center justify-center gap-2 py-2"
+            disabled={createAgency.isPending}
+          >
+            {createAgency.isPending ? <Loader2 className="animate-spin" size={18} /> : "Criar Agência"}
           </Button>
         </form>
       </DialogContent>
