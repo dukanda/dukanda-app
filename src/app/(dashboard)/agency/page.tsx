@@ -1,9 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import { Pen, Plus } from "lucide-react";
 import { CreateAgency } from "./createAgency";
 import { useQuery } from "@tanstack/react-query";
@@ -11,103 +9,84 @@ import { toursAgenciesRoutes } from "@/api/routes/TourAgency/index.routes";
 import Cookies from "js-cookie";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { EditAgency } from "./editarAgency";
+import { Label } from "@/components/ui/label";
+
+function InfoDisplay({ label, value }: { label: string; value?: string }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <Label className="text-gray-600 font-medium">{label}</Label>
+      <p className="border bg-gray-100 text-gray-700 rounded-md px-3 py-2 text-sm">
+        {value || "Não informado"}
+      </p>
+    </div>
+  );
+}
 
 export default function Agency() {
   const user = Cookies.get("dukanda-user") || "";
   const userData = user ? JSON.parse(user) : "";
 
   const getTourAgencies = useQuery({
-    queryKey: ['agencies'],
+    queryKey: ["agencies"],
     queryFn: async () => {
       return await toursAgenciesRoutes.getTourAgencyById(userData?.id);
     },
-  })
- 
+  });
+
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-3 w-max md:flex-row">
+    <div className="flex flex-col gap-6">
+      {/* Botões de ação */}
+      <div className="flex flex-wrap gap-3">
         <CreateAgency>
-          <Button
-            className="bg-green-700 hover:bg-green-600 flex gap-4"
-          >
-            <Plus size={20} />
-            Criar Agência
+          <Button className="bg-green-700 hover:bg-green-600 flex items-center gap-2">
+            <Plus size={18} />
+            Criar Agência
           </Button>
         </CreateAgency>
         <EditAgency>
-          <Button
-            className="bg-green-700 hover:bg-green-600 flex gap-4"
-          >
-            <Pen size={20} />
+          <Button className="bg-green-700 hover:bg-green-600 flex items-center gap-2">
+            <Pen size={18} />
             Editar Informação
           </Button>
         </EditAgency>
       </div>
 
-      <Card className="h-full flex flex-col lg:flex-row justify-between pb-5">
-        <CardHeader>
-          <Avatar className="w-20 h-20 object-fit-cover">
-            <AvatarImage src={getTourAgencies.data?.logoUrl || "https://github.com/dukanda.png"} className="rounded-full w-full h-full object-fit-cover" />
-            <AvatarFallback>{getTourAgencies.data?.name?.charAt(0) || ""}</AvatarFallback>
+      {/* Card com informações da Agência */}
+      <Card className="flex flex-col lg:flex-row items-start gap-6 p-6">
+        {/* Avatar da Agência */}
+        <CardHeader className="flex items-center justify-center">
+          <Avatar className="w-32 h-32 border-4 border-gray-300 rounded-full">
+            <AvatarImage
+              src={getTourAgencies.data?.logoUrl || "https://github.com/dukanda.png"}
+              className="w-full h-full object-cover rounded-full"
+            />
+            <AvatarFallback className="bg-gray-200 text-gray-600 text-xl font-semibold">
+              {getTourAgencies.data?.name?.charAt(0) || "?"}
+            </AvatarFallback>
           </Avatar>
         </CardHeader>
-        <CardContent className="w-full lg:w-[70%] h-full py-5">
-          <CardTitle className="text-xl text-gray-500 mb-5">Informação da Agência</CardTitle>
-          <div className="flex flex-col md:flex-row gap-2 w-full">
-            <div className="w-full flex flex-col gap-3">
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Nome</Label>
-                <Input
-                  name="nome"
-                  placeholder={getTourAgencies.data?.name || "Nome da Agência"}
-                  value={getTourAgencies.data?.name || ""}
-                  disabled
-                />
-              </div>
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Email</Label>
-                <Input
-                  name="email"
-                  placeholder={getTourAgencies.data?.contactEmail || "Email da Agência"}
-                  value={getTourAgencies.data?.contactEmail || ""}
-                  disabled
-                />
-              </div>
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Contacto</Label>
-                <Input
-                  name="contacto"
-                  placeholder={getTourAgencies.data?.contactPhone || "Contacto da Agência"}
-                  value={getTourAgencies.data?.contactPhone || ""}
-                  disabled
-                />
-              </div>
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Endereço</Label>
-                <Input
-                  name="endereco"
-                  placeholder={getTourAgencies.data?.address || "Endereço da Agência"}
-                  value={getTourAgencies.data?.address || ""}
-                  disabled
-                />
-              </div>
-              <div>
-                <Label className="text-md font-semibold text-gray-600">Tipo de Agência</Label>
-                <Input
-                  name="tipo"
-                  placeholder={getTourAgencies.data?.agencyType || "Tipo da Agência"}
-                  value={getTourAgencies.data?.agencyType || ""}
-                  disabled
-                />
-              </div>
+
+        {/* Informações da Agência */}
+        <CardContent className="w-full flex flex-col gap-6">
+          <CardTitle className="text-2xl font-semibold text-gray-700">Informação da Agência</CardTitle>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-4">
+              <InfoDisplay label="Nome" value={getTourAgencies.data?.name} />
+              <InfoDisplay label="Email" value={getTourAgencies.data?.contactEmail} />
+              <InfoDisplay label="Contato" value={getTourAgencies.data?.contactPhone} />
+              <InfoDisplay label="Endereço" value={getTourAgencies.data?.address} />
+              <InfoDisplay label="Tipo de Agência" value={getTourAgencies.data?.agencyType} />
             </div>
-            <div className="w-full">
-              <Label className="text-md font-semibold text-gray-600">Descrição</Label>
+
+            {/* Descrição da Agência */}
+            <div className="flex flex-col">
+              <Label className="text-gray-600 font-medium">Descrição</Label>
               <Textarea
                 name="descricao"
-                placeholder={getTourAgencies.data?.description || "Descrição da Agência"}
                 value={getTourAgencies.data?.description || ""}
-                className="min-h-[345px]"
+                placeholder="Descrição da Agência"
+                className="min-h-[200px]"
                 disabled
               />
             </div>
