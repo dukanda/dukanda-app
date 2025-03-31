@@ -1,9 +1,11 @@
 "use client";
 import { toursAgenciesRoutes } from "@/api/routes/TourAgency/index.routes";
 import { useToast } from "@/hooks/use-toast";
+import { queryClient } from "@/module/tanstack-query-config";
 import { useMutation } from "@tanstack/react-query";
 
 export const AgencyMutation = () => {
+
   const { toast } = useToast();
   const createAgency = useMutation({
     mutationKey: ['agency'],
@@ -17,8 +19,11 @@ export const AgencyMutation = () => {
         description: 'A agencia foi criada com sucesso.',
         duration: 2000,
       });
+
+      queryClient.refetchQueries()
     },
-    onError: () => {
+    onError: (error) => {
+      console.log(error);
       toast({
         title: 'Erro',
         description: ' Ocorreu um erro ao criar a agencia.',
@@ -26,6 +31,7 @@ export const AgencyMutation = () => {
       });
     },
   });
+
 
   return createAgency;
 };

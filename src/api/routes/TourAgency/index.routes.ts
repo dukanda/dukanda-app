@@ -1,5 +1,19 @@
 import { api } from "@/api/axios.config";
 
+interface TourAgency {
+  userId: string;
+  name: string;
+  description: string;
+  contactEmail: string;
+  contactPhone: string;
+  address: string;
+  agencyType: string;
+  isVerified: boolean;
+  logoUrl: string;
+  tourAgencyTypeId: number;
+  toursCount: number;
+}
+
 class ToursAgenciesRoutes {
 
   async getTourAgencies() {
@@ -9,16 +23,13 @@ class ToursAgenciesRoutes {
 
   async createTourAgency(data: TourAgencyToCreate) {
     const formData = new FormData();
-    formData.append("userId", data.userId);
-    formData.append("name", data.name);
-    formData.append("description", data.description);
-    formData.append("contactEmail", data.contactEmail);
-    formData.append("contactPhone", data.contactPhone);
-    formData.append("address", data.address);
-    formData.append("logoUrl", data.logoUrl); // Adiciona o arquivo
-    formData.append("tourAgencyTypeId", data.tourAgencyTypeId.toString());
-    formData.append("agencyType", data.agencyType);
-    formData.append("toursCount", data.toursCount.toString());
+    formData.append("Name", data.Name);
+    formData.append("Description", data.Description);
+    formData.append("ContactEmail", data.ContactEmail);
+    formData.append("ContactPhone", data.ContactPhone);
+    formData.append(".Address", data.Address);
+    formData.append("Logo", data.Logo);
+    formData.append(".TourAgencyTypeId", data.TourAgencyTypeId.toString());
 
     const response = await api.post(`/TourAgencies/`, formData, {
       headers: {
@@ -29,7 +40,12 @@ class ToursAgenciesRoutes {
   }
 
   async getTourAgencyById(id: string) {
-    const response = await api.get(`/TourAgencies/${id}`);
+    const response = await api.get<TourAgency>(`/TourAgencies/${id}`);
+    return response.data;
+  }
+
+  async getToursMyAgency(){
+    const response = await api.get("/Tours/my-agency")
     return response.data;
   }
 

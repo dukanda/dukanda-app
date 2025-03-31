@@ -1,17 +1,48 @@
 import { api } from "@/api/axios.config";
 
+interface Tour {
+  id: string;
+  title: string;
+  description: string;
+  basePrice: number;
+  startDate: string;
+  endDate: string;
+  agencyName: string;
+  agencyLogoUrl: string;
+  cityName: string;
+  coverImageUrl: string;
+  tourTypes: {
+    id: number;
+    name: string;
+    icon: string;
+  }[];
+  created: string;
+}
+
+interface ToursResponse {
+  items: Tour[];
+  pageNumber: number;
+  totalPages: number;
+  totalCount: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
+
+
+
 class ToursRoutes {
   async createTourAgency(formData: TourToCreate) {
     const formDataToSend = new FormData();
-    formDataToSend.append("AgencyId", formData.AgencyId);
-    formDataToSend.append("CityId", formData.CityId);
-    formDataToSend.append("TourTypeIds", formData.TourTypeIds.toString());
-    formDataToSend.append("EndDate", formData.EndDate);
-    formDataToSend.append("StartDate", formData.StartDate);
-    formDataToSend.append("Cover", formData.Cover);
-    formDataToSend.append("BasePrice", formData.basePrice.toString());
     formDataToSend.append("Title", formData.Title);
     formDataToSend.append("Description", formData.Description);
+    formDataToSend.append("BasePrice", formData.basePrice.toString());
+    formDataToSend.append("StartDate", formData.StartDate);
+    formDataToSend.append("EndDate", formData.EndDate);
+    formDataToSend.append("CityId", formData.CityId);
+    formDataToSend.append("Cover", formData.Cover); // Certifique-se de que Cover é um arquivo (Blob ou File)
+    formData.TourTypeIds.forEach((id) => {
+      formDataToSend.append("TourTypeIds", id.toString());
+    });
 
     const response = await api.post("/Tours", formDataToSend, {
       headers: {
@@ -20,6 +51,13 @@ class ToursRoutes {
     });
     return response.data;
   }
+
+  async getToursMyAgency(): Promise<ToursResponse> {
+    const response = await api.get("/Tours/my-agency");
+    return response.data;
+  }
+
+
 }
 
 export const toursRoutes = new ToursRoutes();

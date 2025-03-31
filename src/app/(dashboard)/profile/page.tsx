@@ -15,6 +15,8 @@ export default function Profile() {
     },
   });
 
+  console.log(userLogged.data, "userLogged");
+
   const userData = userLogged.data;
 
   return (

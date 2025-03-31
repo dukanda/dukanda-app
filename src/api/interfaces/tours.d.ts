@@ -1,6 +1,5 @@
 
 interface TourToCreate {
-  AgencyId: string;
   Title: string;
   Description: string;
   basePrice: number;

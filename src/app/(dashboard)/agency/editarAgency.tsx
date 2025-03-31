@@ -21,7 +21,7 @@ interface CreateAgencyProps {
   children?: React.ReactNode;
 }
 
-export const CreateAgency = ({ children }: CreateAgencyProps) => {
+export const EditAgency = ({ children }: CreateAgencyProps) => {
   const createAgency = AgencyMutation();
   const [image, setImage] = useState("");
   const [formData, setFormData] = useState<TourAgencyToCreate>({

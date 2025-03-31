@@ -20,6 +20,7 @@ import { ToursMutation } from "./queryTours";
 import { addDays } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { citiesRoutes } from "@/api/routes/Cities/index.routes";
+import { toursTypeRoutes } from "@/api/routes/ToursType";
 
 interface CreateToursProps {
   children?: React.ReactNode;
@@ -46,20 +47,26 @@ export const CreateTours = ({ children }: CreateToursProps) => {
     },
   })
 
+  const getToursTypes = useQuery({
+    queryKey: ['toursTypes'],
+    queryFn: async () => {
+      return await toursTypeRoutes.getToursTypes();
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted!", { title, description, basePrice, cityId, tourTypeIds, image, startDate, endDate });
 
     await toursMutation.createTours.mutate({
-      AgencyId: "1",
       Title: title,
       Description: description,
       basePrice: Number(basePrice),
       StartDate: startDate.toISOString(),
       EndDate: endDate.toISOString(),
       CityId: cityId ? cityId.toString() : "",
-      Cover: image,
-      TourTypeIds: tourTypeIds ? [tourTypeIds] : [],
+      Cover: image, // Certifique-se de que `image` é um arquivo (Blob ou File)
+      TourTypeIds: tourTypeIds ? [tourTypeIds] : [], // Enviar como array
     });
   };
 
@@ -152,9 +159,11 @@ export const CreateTours = ({ children }: CreateToursProps) => {
                 <SelectValue placeholder="Selecione o tipo de passeio" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">Passeio de Turismo</SelectItem>
-                <SelectItem value="2">Passeio de Viagem</SelectItem>
-                <SelectItem value="3">Passeio de Viagem e Turismo</SelectItem>
+                {getToursTypes.data?.items.map((tourType) => (
+                  <SelectItem key={tourType.id} value={tourType.id.toString()}>
+                    {tourType.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
