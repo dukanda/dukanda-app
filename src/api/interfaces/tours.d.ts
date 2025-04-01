@@ -6,6 +6,6 @@ interface TourToCreate {
   StartDate: string;
   EndDate: string;
   CityId: string;
-  Cover: string;
+  Cover: File | null;
   TourTypeIds: number[];
 }

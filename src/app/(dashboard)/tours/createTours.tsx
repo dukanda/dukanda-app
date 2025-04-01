@@ -14,7 +14,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { DatePickerWithRange } from "@/components/ui/datePickerRanger";
-import { ImageUploader } from "@/components/image-loader";
 import {
   Select,
   SelectContent,
@@ -27,6 +26,7 @@ import { addDays } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { citiesRoutes } from "@/api/routes/Cities/index.routes";
 import { toursTypeRoutes } from "@/api/routes/ToursType";
+import UploadArea from "@/components/upload-area";
 
 interface CreateToursProps {
   children?: React.ReactNode;
@@ -34,8 +34,9 @@ interface CreateToursProps {
 
 export const CreateTours = ({ children }: CreateToursProps) => {
   const toursMutation = ToursMutation();
+  const [isOpen, setIsOpen] = useState(false); // Controle do Dialog
 
-  const [image, setImage] = useState<File | null>(null); // Alterado para aceitar arquivos
+  const [image, setImage] = useState<File | null>(null);
   const [cityId, setCityId] = useState<number | null>(null);
   const [tourTypeIds, setTourTypeIds] = useState<number | null>(null);
   const [title, setTitle] = useState<string>("");
@@ -54,20 +55,21 @@ export const CreateTours = ({ children }: CreateToursProps) => {
     queryFn: toursTypeRoutes.getToursTypes,
   });
 
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setBasePrice("");
+    setCityId(null);
+    setTourTypeIds(null);
+    setImage(null);
+    setStartDate(new Date());
+    setEndDate(addDays(new Date(), 10));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted!", {
-      title,
-      description,
-      basePrice,
-      cityId,
-      tourTypeIds,
-      image,
-      startDate,
-      endDate,
-    });
 
-    await toursMutation.createTours.mutate({
+    await toursMutation.createTours.mutateAsync({
       Title: title,
       Description: description,
       basePrice: Number(basePrice),
@@ -77,35 +79,14 @@ export const CreateTours = ({ children }: CreateToursProps) => {
       Cover: image,
       TourTypeIds: tourTypeIds ? [tourTypeIds] : [],
     });
+
+    // Após sucesso, resetar os inputs e fechar o Dialog
+    resetForm();
+    setIsOpen(false);
   };
 
-  // const handleCreateTour = async () => {
-  //   console.log("Image:", image);
-  //   if (!image) {
-  //     alert("Por favor, envie uma imagem de capa.");
-  //     return;
-  //   }
-
-  //   try {
-  //     await toursRoutes.createTours({
-  //       Cover: image,
-  //       Title: title,
-  //       Description: description,
-  //       BasePrice: Number(basePrice),
-  //       StartDate: startDate.toISOString(),
-  //       EndDate: endDate.toISOString(),
-  //       CityId: cityId ? cityId.toString() : "",
-  //       TourTypeIds: tourTypeIds ? [tourTypeIds] : [],
-  //     });
-  //     alert("Tour criada com sucesso!");
-  //   } catch (error) {
-  //     console.error("Erro ao criar tour:", error);
-  //     alert("Erro ao criar tour.");
-  //   }
-  // };
-
   return (
-    <Dialog modal>
+    <Dialog modal open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="w-full max-w-lg h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden rounded-lg">
         <DialogHeader>
@@ -214,23 +195,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           {/* Upload de Imagem */}
           <div>
             <Label>Imagem de Capa</Label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  setImage(file); // Atualizado para aceitar arquivos
-                }
-              }}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-              disabled={toursMutation.createTours.isPending}
-              required
-            />
-            <ImageUploader
-              setImageUrl={(file) => setImage(file)} // Atualizado para aceitar arquivos
-              isLoading={toursMutation.createTours.isPending}
-            />
+            <UploadArea onChange={(file) => setImage(file)} />
           </div>
 
           {/* Botão de Envio */}

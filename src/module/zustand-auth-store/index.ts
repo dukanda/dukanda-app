@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
   
   login: (token, refreshToken, user) => {
     const expirationDate = new Date();
-    expirationDate.setHours(expirationDate.getHours() + 1);
+    expirationDate.setHours(expirationDate.getHours() + 5);
 
     Cookies.set("dukanda-token", token, { expires: expirationDate });
     Cookies.set("dukanda-refreshToken", refreshToken, { expires: expirationDate });

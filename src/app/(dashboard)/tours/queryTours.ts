@@ -11,16 +11,14 @@ export const ToursMutation = () => {
     mutationFn: async (formData: TourToCreate) => {
       return await toursRoutes.createTours(formData);
     },
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       toast({
         title: 'Sucedido',
         description: 'A Passeio foi criada com sucesso.',
         duration: 2000,
       });
     },
-    onError: (data) => {
-      console.log(data);
+    onError: () => {
       toast({
         title: 'Erro',
         description: ' Ocorreu um erro ao criar a tour.',

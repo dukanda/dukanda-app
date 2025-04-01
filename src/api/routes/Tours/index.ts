@@ -37,7 +37,9 @@ class ToursRoutes {
     formDataToSend.append("StartDate", formData.StartDate);
     formDataToSend.append("EndDate", formData.EndDate);
     formDataToSend.append("CityId", formData.CityId);
-    formDataToSend.append("Cover", formData.Cover); 
+    if (formData.Cover) {
+      formDataToSend.append("Cover", formData.Cover);
+    }
     formData.TourTypeIds.forEach((id) => {
       formDataToSend.append("TourTypeIds", id.toString());
     });

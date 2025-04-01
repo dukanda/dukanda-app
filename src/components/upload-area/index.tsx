@@ -48,7 +48,7 @@ export default function UploadArea({
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
       props?.onChange(file);
-      onChange?.(file);
+      onChange?.(file); // Garante que o arquivo seja passado para o prop onChange
       const fileURL = URL.createObjectURL(file);
       setPreview(fileURL);
       setFile(file);
@@ -82,7 +82,7 @@ export default function UploadArea({
   return (
     <div
       {...getRootProps()}
-      className={`border-dashed flex flex-col justify-center items-center border-2 rounded-lg cursor-pointer min-w-[200px] px-4 w-full h-max relative ${isDragActive ? "border-ipilOrange" : "border-gray-300"
+      className={`border-dashed flex flex-col justify-center items-center border-2 rounded-lg cursor-pointer min-w-[200px] px-4 w-full h-[200px] min-h-max relative ${isDragActive ? "border-ipilOrange" : "border-gray-300"
         }`}
     >
       {isDragActive && (
