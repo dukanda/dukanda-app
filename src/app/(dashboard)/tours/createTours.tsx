@@ -35,7 +35,7 @@ interface CreateToursProps {
 export const CreateTours = ({ children }: CreateToursProps) => {
   const toursMutation = ToursMutation();
 
-  const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<File | null>(null); // Alterado para aceitar arquivos
   const [cityId, setCityId] = useState<number | null>(null);
   const [tourTypeIds, setTourTypeIds] = useState<number | null>(null);
   const [title, setTitle] = useState<string>("");
@@ -78,6 +78,31 @@ export const CreateTours = ({ children }: CreateToursProps) => {
       TourTypeIds: tourTypeIds ? [tourTypeIds] : [],
     });
   };
+
+  // const handleCreateTour = async () => {
+  //   console.log("Image:", image);
+  //   if (!image) {
+  //     alert("Por favor, envie uma imagem de capa.");
+  //     return;
+  //   }
+
+  //   try {
+  //     await toursRoutes.createTours({
+  //       Cover: image,
+  //       Title: title,
+  //       Description: description,
+  //       BasePrice: Number(basePrice),
+  //       StartDate: startDate.toISOString(),
+  //       EndDate: endDate.toISOString(),
+  //       CityId: cityId ? cityId.toString() : "",
+  //       TourTypeIds: tourTypeIds ? [tourTypeIds] : [],
+  //     });
+  //     alert("Tour criada com sucesso!");
+  //   } catch (error) {
+  //     console.error("Erro ao criar tour:", error);
+  //     alert("Erro ao criar tour.");
+  //   }
+  // };
 
   return (
     <Dialog modal>
@@ -189,8 +214,21 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           {/* Upload de Imagem */}
           <div>
             <Label>Imagem de Capa</Label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setImage(file); // Atualizado para aceitar arquivos
+                }
+              }}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              disabled={toursMutation.createTours.isPending}
+              required
+            />
             <ImageUploader
-              setImageUrl={setImage}
+              setImageUrl={(file) => setImage(file)} // Atualizado para aceitar arquivos
               isLoading={toursMutation.createTours.isPending}
             />
           </div>

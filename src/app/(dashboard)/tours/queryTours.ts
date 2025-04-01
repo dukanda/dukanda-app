@@ -9,7 +9,7 @@ export const ToursMutation = () => {
   const createTours = useMutation({
     mutationKey: ['tours'],
     mutationFn: async (formData: TourToCreate) => {
-      return await toursRoutes.createTourAgency(formData);
+      return await toursRoutes.createTours(formData);
     },
     onSuccess: (data) => {
       console.log(data);
@@ -36,5 +36,5 @@ export const ToursMutation = () => {
     },
   })
 
-  return {createTours, getCities};
+  return { createTours, getCities };
 };

@@ -28,10 +28,8 @@ interface ToursResponse {
   hasNextPage: boolean;
 }
 
-
-
 class ToursRoutes {
-  async createTourAgency(formData: TourToCreate) {
+  async createTours(formData: TourToCreate) {
     const formDataToSend = new FormData();
     formDataToSend.append("Title", formData.Title);
     formDataToSend.append("Description", formData.Description);
@@ -39,7 +37,7 @@ class ToursRoutes {
     formDataToSend.append("StartDate", formData.StartDate);
     formDataToSend.append("EndDate", formData.EndDate);
     formDataToSend.append("CityId", formData.CityId);
-    formDataToSend.append("Cover", formData.Cover); // Certifique-se de que Cover é um arquivo (Blob ou File)
+    formDataToSend.append("Cover", formData.Cover); 
     formData.TourTypeIds.forEach((id) => {
       formDataToSend.append("TourTypeIds", id.toString());
     });
@@ -47,7 +45,9 @@ class ToursRoutes {
     const response = await api.post("/Tours", formDataToSend, {
       headers: {
         "Content-Type": "multipart/form-data",
+        // "Authorization": `Bearer ${token}`,
       },
+
     });
     return response.data;
   }
@@ -56,8 +56,6 @@ class ToursRoutes {
     const response = await api.get("/Tours/my-agency");
     return response.data;
   }
-
-
 }
 
 export const toursRoutes = new ToursRoutes();
