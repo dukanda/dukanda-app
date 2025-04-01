@@ -19,9 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ImageUploader } from "@/components/image-loader";
 import { AgencyMutation } from "./queryAgency";
 import { Loader2 } from "lucide-react";
+import UploadArea from "@/components/upload-area";
 
 interface CreateAgencyProps {
   children?: React.ReactNode;
@@ -29,14 +29,14 @@ interface CreateAgencyProps {
 
 export const CreateAgency = ({ children }: CreateAgencyProps) => {
   const createAgency = AgencyMutation();
-  const [image, setImage] = useState("");
+   const [image, setImage] = useState<File | null>(null);
   const [formData, setFormData] = useState<TourAgencyToCreate>({
     Name: "",
     Description: "",
     ContactEmail: "",
     ContactPhone: "",
     Address: "",
-    Logo: "",
+    Logo: null,
     TourAgencyTypeId: 0,
   });
 
@@ -52,9 +52,8 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
     e.preventDefault();
     const payload = {
       ...formData,
-      Logo: image || "",
+      Logo: image || null,
     };
-    console.log("Enviando dados:", payload);
     await createAgency.mutate(payload);
   };
 
@@ -166,7 +165,7 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
           {/* Logo */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="logo">Logo da Agência</Label>
-            <ImageUploader setImageUrl={setImage} />
+             <UploadArea onChange={(file) => setImage(file)} />
           </div>
 
           {/* Botão de envio */}

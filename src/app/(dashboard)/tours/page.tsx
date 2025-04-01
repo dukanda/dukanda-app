@@ -5,7 +5,7 @@ import { CircleFadingPlus, MapPin, CalendarDays, Loader2 } from "lucide-react";
 import { CreateTours } from "./createTours";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { toursRoutes } from "@/api/routes/Tours";
+import { toursRoutes } from "@/api/routes/Tours/index.routes";
 import { format } from "date-fns";
 import { ToursDetails } from "./toursDetails";
 import { EditTours } from "./editTours";

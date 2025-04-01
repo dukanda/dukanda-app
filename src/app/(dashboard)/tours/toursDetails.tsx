@@ -1,4 +1,4 @@
-import { toursRoutes } from "@/api/routes/Tours";
+import { toursRoutes } from "@/api/routes/Tours/index.routes";
 import {
   AlertDialog,
   AlertDialogCancel,

@@ -1,15 +1,11 @@
 interface TourAgencyToCreate {
-  // userId: string,
   Name: string,
   Description: string,
   ContactEmail: string,
   ContactPhone: string,
   Address: string,
-  // logoUrl: File, 
-  Logo: string,
+  Logo: File | null,
   TourAgencyTypeId: number,
-  // agencyType: string,
-  // toursCount: number
 }
 
 

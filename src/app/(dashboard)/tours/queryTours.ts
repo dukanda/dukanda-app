@@ -1,5 +1,5 @@
 "use client";
-import { toursRoutes } from "@/api/routes/Tours";
+import { toursRoutes } from "@/api/routes/Tours/index.routes";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, } from "@tanstack/react-query";
 
