@@ -30,6 +30,17 @@ interface Tour {
   created: string;
 }
 
+interface TourEdit {
+  id?: string;
+  title: string;
+  description: string;
+  basePrice: number;
+  startDate: string;
+  endDate: string;
+  cityId: number;
+  tourTypeIds: number[];
+}
+
 interface ToursResponse {
   items: Tour[];
   pageNumber: number;

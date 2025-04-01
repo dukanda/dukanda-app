@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toursRoutes } from "@/api/routes/Tours";
 import { format } from "date-fns";
 import { ToursDetails } from "./toursDetails";
+import { EditTours } from "./editTours";
 
 export default function ToursScreen() {
   const myAgencyTours = useQuery({
@@ -76,9 +77,12 @@ export default function ToursScreen() {
                   <ToursDetails tourId={tour.id}>
                     <Button className="w-full bg-orange-600 hover:bg-orange-500">Ver Detalhes</Button>
                   </ToursDetails>
-                  <Button variant="outline" className="w-full border border-green-500 text-green-500">
-                    Editar
-                  </Button>
+                  <EditTours tour={tour}>
+                    <Button variant="outline" className="w-full border border-green-500 text-green-500">
+                      Editar
+                    </Button>
+                  </EditTours>
+
                 </div>
               </div>
             </div>

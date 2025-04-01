@@ -36,6 +36,12 @@ class ToursRoutes {
     const response = await api.get("/Tours/my-agency");
     return response.data;
   }
+
+  async editTours(tourId: string, formData: TourEdit) {
+    const response = await api.put(`/Tours/${tourId}`, formData);
+    return response.data;
+  }
+
 }
 
 export const toursRoutes = new ToursRoutes();
