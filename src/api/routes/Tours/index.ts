@@ -1,32 +1,5 @@
 import { api } from "@/api/axios.config";
 
-interface Tour {
-  id: string;
-  title: string;
-  description: string;
-  basePrice: number;
-  startDate: string;
-  endDate: string;
-  agencyName: string;
-  agencyLogoUrl: string;
-  cityName: string;
-  coverImageUrl: string;
-  tourTypes: {
-    id: number;
-    name: string;
-    icon: string;
-  }[];
-  created: string;
-}
-
-interface ToursResponse {
-  items: Tour[];
-  pageNumber: number;
-  totalPages: number;
-  totalCount: number;
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-}
 
 class ToursRoutes {
   async createTours(formData: TourToCreate) {
@@ -51,6 +24,11 @@ class ToursRoutes {
       },
 
     });
+    return response.data;
+  }
+
+  async getToursDetails(tourId: string) {
+    const response = await api.get<TourDetails>(`/Tours/${tourId}`);
     return response.data;
   }
 

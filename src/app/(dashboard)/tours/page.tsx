@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { toursRoutes } from "@/api/routes/Tours";
 import { format } from "date-fns";
+import { ToursDetails } from "./toursDetails";
 
 export default function ToursScreen() {
   const myAgencyTours = useQuery({
@@ -72,7 +73,9 @@ export default function ToursScreen() {
                 </div>
 
                 <div className="flex flex-col gap-3 mt-4">
-                  <Button className="w-full bg-orange-600 hover:bg-orange-500">Ver Detalhes</Button>
+                  <ToursDetails>
+                    <Button className="w-full bg-orange-600 hover:bg-orange-500">Ver Detalhes</Button>
+                  </ToursDetails>
                   <Button variant="outline" className="w-full border border-green-500 text-green-500">
                     Editar
                   </Button>

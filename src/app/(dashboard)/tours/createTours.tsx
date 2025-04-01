@@ -88,7 +88,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
   return (
     <Dialog modal open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-full max-w-lg h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden rounded-lg">
+      <DialogContent className="w-full max-w-lg h-full sm:h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">Criar Novo Tour</DialogTitle>
           <DialogDescription>Preencha os detalhes abaixo para criar um novo tour.</DialogDescription>
