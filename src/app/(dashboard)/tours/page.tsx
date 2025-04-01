@@ -73,7 +73,7 @@ export default function ToursScreen() {
                 </div>
 
                 <div className="flex flex-col gap-3 mt-4">
-                  <ToursDetails>
+                  <ToursDetails tourId={tour.id}>
                     <Button className="w-full bg-orange-600 hover:bg-orange-500">Ver Detalhes</Button>
                   </ToursDetails>
                   <Button variant="outline" className="w-full border border-green-500 text-green-500">
