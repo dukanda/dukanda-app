@@ -79,3 +79,8 @@ interface ItineraryToCreate {
   description: string; // Descrição do itinerário
   displayOrder: number; // Ordem de exibição
 }
+
+interface AttractionToCreate {
+  tourId: string; // UUID do tour
+  touristAttractionId: string; // UUID da atração turística
+}

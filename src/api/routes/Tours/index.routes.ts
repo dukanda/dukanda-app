@@ -51,6 +51,11 @@ class ToursRoutes {
     const response = await api.post(`/Tours/${tourId}/itineraries`, data);
     return response.data;
   }
+
+  async addAttractionsInTour(tourId: string, data: AttractionToCreate) {
+    const response = await api.post(`/Tours/${tourId}/attractions`, data);
+    return response.data;
+  }
 }
 
 export const toursRoutes = new ToursRoutes();

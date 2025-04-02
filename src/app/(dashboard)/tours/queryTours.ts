@@ -56,6 +56,28 @@ export const ToursMutation = () => {
     },
   });
 
+  const addAttractionsInTour = useMutation({
+    mutationKey: ['attractions'],
+    mutationFn: async ({ tourId, data }: { tourId: string; data: AttractionToCreate }) => {
+      return await toursRoutes.addAttractionsInTour(tourId, data);
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Sucedido',
+        description: 'Atração adicionada com sucesso.',
+        duration: 2000,
+      });
+    }
+    ,
+    onError: () => {
+      toast({
+        title: 'Erro',
+        description: ' Ocorreu um erro ao adicionar a atração.',
+        duration: 2000,
+      });
+    },
+  });
 
-  return { createTours, editTours, addItinerariesInTour };
+
+  return { createTours, editTours, addItinerariesInTour, addAttractionsInTour };
 };
