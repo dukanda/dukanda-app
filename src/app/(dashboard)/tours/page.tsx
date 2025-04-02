@@ -7,8 +7,8 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { toursRoutes } from "@/api/routes/Tours/index.routes";
 import { format } from "date-fns";
-import { ToursDetails } from "./toursDetails";
-import { EditTours } from "./editTours";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export default function ToursScreen() {
   const myAgencyTours = useQuery({
@@ -54,7 +54,7 @@ export default function ToursScreen() {
 
               <div className="p-4 flex flex-col gap-2">
                 <h3 className="text-lg font-semibold text-gray-900">{tour.title}</h3>
-                <p className="text-sm text-gray-600 line-clamp-2">{tour.description}</p>
+                <Badge variant={"outline"} className="self-start py-1 outline-red-300 flex gap-1">Aprovação:{" "} <span className="text-red-600">PENDENTE</span></Badge>
 
                 <div className="flex items-center gap-2 text-sm text-gray-700 mt-2">
                   <MapPin size={16} />
@@ -74,15 +74,19 @@ export default function ToursScreen() {
                 </div>
 
                 <div className="flex flex-col gap-3 mt-4">
-                  <ToursDetails tourId={tour.id}>
-                    <Button className="w-full bg-orange-600 hover:bg-orange-500">Ver Detalhes</Button>
-                  </ToursDetails>
-                  <EditTours tour={tour}>
+                  {/* <ToursDetails tourId={tour.id}> */}
+                  <Link href={`/tours/${tour.id}/details`} className="w-full">  
+                    <Button className="w-full bg-orange-600 hover:bg-orange-500">
+                      Ver Detalhes e Editar
+                    </Button>
+                  </Link>
+
+                  {/* </ToursDetails> */}
+                  {/* <EditTours tour={tour}>
                     <Button variant="outline" className="w-full border border-green-500 text-green-500">
                       Editar
                     </Button>
-                  </EditTours>
-
+                  </EditTours> */}
                 </div>
               </div>
             </div>
