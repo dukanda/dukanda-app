@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 interface TourToCreate {
   Title: string;
   Description: string;
@@ -50,10 +48,43 @@ interface ToursResponse {
   hasNextPage: boolean;
 }
 
+interface Itinerary {
+  id: string;
+  tourId: string;
+  date: string; // Data no formato ISO 8601
+  title: string;
+  description: string;
+  displayOrder: number;
+}
+
+interface Attraction {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  isFeatured: boolean;
+  cityId: number;
+  cityName: string;
+  latitude: number;
+  longitude: number;
+}
+
+interface Package {
+  id: string;
+  tourId: string;
+  name: string;
+  price: number;
+  benefits: {
+    id: string;
+    name: string;
+    description: string;
+  }[];
+}
+
 interface TourDetails {
-  itineraries: any[]; // Substitua 'any' por um tipo mais específico, se disponível
-  attractions: any[]; // Substitua 'any' por um tipo mais específico, se disponível
-  packages: any[]; // Substitua 'any' por um tipo mais específico, se disponível
+  itineraries: Itinerary[];
+  attractions: Attraction[];
+  packages: Package[];
   id: string;
   title: string;
   description: string;
@@ -86,10 +117,10 @@ interface AttractionToCreate {
 }
 interface PackageToCreate {
   tourId: string;
-  name: string; 
-  price: number; 
+  name: string;
+  price: number;
   benefits: {
     name: string;
-    description: string; 
+    description: string;
   }[];
 }

@@ -7,7 +7,8 @@ const nextConfig: NextConfig = {
       "utfs.io",
       "github.com",
       "fakeimg.pl",
-      "res.cloudinary.com"
+      "res.cloudinary.com",
+      "picsum.photos",
     ],
   },
 };

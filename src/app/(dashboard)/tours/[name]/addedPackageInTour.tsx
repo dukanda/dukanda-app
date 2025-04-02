@@ -26,7 +26,6 @@ export const CreatePackageInTour = ({ children, tourId }: CreatePackageInTourPro
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [benefits, setBenefits] = useState<{ name: string; description: string }[]>([]);
-
   const toursMutation = ToursMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
