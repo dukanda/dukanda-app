@@ -28,7 +28,9 @@ class ToursAgenciesRoutes {
     formData.append("ContactEmail", data.ContactEmail);
     formData.append("ContactPhone", data.ContactPhone);
     formData.append("Address", data.Address);
-    formData.append("Logo", data.Logo);
+    if (data.Logo) {
+      formData.append("Logo", data.Logo);
+    }
     formData.append("TourAgencyTypeId", data.TourAgencyTypeId.toString());
 
     const response = await api.post(`/TourAgencies`, formData, {
