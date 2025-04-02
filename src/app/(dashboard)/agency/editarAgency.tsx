@@ -30,16 +30,16 @@ interface EditAgencyProps {
 
 export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
   const updateAgency = AgencyMutation();
-  const [image, setImage] = useState(agencyData?.Logo || "");
+  const [image, setImage] = useState<File | null>(agencyData?.Logo || null);
   const [formData, setFormData] = useState<TourAgencyToCreate>(agencyData || {
-    Name: "",
-    Description: "",
-    ContactEmail: "",
-    ContactPhone: "",
-    Address: "",
-    TourAgencyTypeId: 0,
-    Logo: "",
-  });
+      Name: "",
+      Description: "",
+      ContactEmail: "",
+      ContactPhone: "",
+      Address: "",
+      TourAgencyTypeId: 0,
+      Logo: null, // Adjusted to match the expected type
+    });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -53,7 +53,7 @@ export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
     e.preventDefault();
     const payload = {
       ...formData,
-      Logo: image || "",
+      Logo: image,
     };
     console.log("Atualizando dados:", payload);
     await updateAgency.mutate(payload);
@@ -168,7 +168,12 @@ export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
           {/* Logo */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="logo">Logo da Agência</Label>
-            <ImageUploader setImageUrl={setImage} />
+            <ImageUploader setImageUrl={(url: string) => {
+              console.log("Received image URL:", url);
+              // Convert the URL to a File or handle it as needed
+              const file = null; // Replace this with logic to convert URL to File if applicable
+              setImage(file);
+            }} />
           </div>
 
           {/* Botão de atualização */}
