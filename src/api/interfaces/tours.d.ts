@@ -71,3 +71,11 @@ interface TourDetails {
   }[];
   created: string;
 }
+
+interface ItineraryToCreate {
+  tourId: string; // UUID do tour
+  date: date; // Data no formato ISO 8601
+  title: string; // Título do itinerário
+  description: string; // Descrição do itinerário
+  displayOrder: number; // Ordem de exibição
+}

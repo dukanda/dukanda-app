@@ -47,6 +47,10 @@ class ToursRoutes {
     return response.data;
   }
 
+  async addItinerariesInTour(tourId: string, data: ItineraryToCreate) {
+    const response = await api.post(`/Tours/${tourId}/itineraries`, data);
+    return response.data;
+  }
 }
 
 export const toursRoutes = new ToursRoutes();

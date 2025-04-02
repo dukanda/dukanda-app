@@ -34,6 +34,28 @@ export const ToursMutation = () => {
   });
 
 
+  const addItinerariesInTour = useMutation({
+    mutationKey: ['itineraries'],
+    mutationFn: async ({ tourId, data }: { tourId: string; data: ItineraryToCreate }) => {
+      return await toursRoutes.addItinerariesInTour(tourId, data);
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Sucedido',
+        description: 'O itinerário foi adicionado com sucesso.',
+        duration: 2000,
+      });
+    }
+    ,
+    onError: () => {
+      toast({
+        title: 'Erro',
+        description: ' Ocorreu um erro ao adicionar o itinerário.',
+        duration: 2000,
+      });
+    },
+  });
 
-  return { createTours, editTours };
+
+  return { createTours, editTours, addItinerariesInTour };
 };

@@ -7,9 +7,27 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, MapPin, Pencil, PlusCircle } from "lucide-react";
+import { CalendarDays, ChevronLeft, MapPin, Pencil, PlusCircle } from "lucide-react";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CreateItineraries } from "./addedItinerariesInTour";
+
+// Dados fictícios para Itinerários, Pacotes e Atrações Turísticas
+const fakeItineraries = [
+  { id: 1, title: "Passeio de barco", description: "Navegação pela costa com paradas em ilhas.", duration: "4h" },
+  { id: 2, title: "Trilha na montanha", description: "Caminhada ecológica com guia.", duration: "6h" },
+];
+
+const fakePackages = [
+  { id: 1, name: "Pacote Premium", price: 250000, description: "Inclui transporte, alimentação e passeios exclusivos." },
+  { id: 2, name: "Pacote Básico", price: 120000, description: "Inclui transporte e passeios básicos." },
+];
+
+const fakeAttractions = [
+  { id: 1, name: "Cachoeira Azul", description: "Uma das cachoeiras mais bonitas da região." },
+  { id: 2, name: "Mirante do Céu", description: "Vista panorâmica da cidade e do mar." },
+];
 
 export default function TourPage() {
   const { name } = useParams<{ name: string }>();
@@ -29,6 +47,11 @@ export default function TourPage() {
 
   return (
     <div className="w-full max-w-5xl mx-auto p-6">
+
+      <Link href="/tours" className=" absolute top-20 left-20 bg-white text-gray-700 p-2 rounded-md shadow flex items-center gap-5">
+        <ChevronLeft size={20} className="text-gray-700" />
+        Voltar
+      </Link>
       {/* Header */}
       <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">
         <Image
@@ -38,15 +61,20 @@ export default function TourPage() {
           objectFit="cover"
           className="opacity-90"
         />
-        <div className="absolute top-4 left-4 bg-white p-2 rounded-md shadow">
-          <Image src={tour.agencyLogoUrl} alt={tour.agencyName} width={50} height={50} className="rounded-full" />
+        <div className="absolute top-4 left-4 bg-white/50 p-2 rounded-md shadow">
+          <Avatar className="w-12 h-12">
+            <AvatarImage src={tour.agencyLogoUrl} alt={tour.agencyName} className="w-12 h-12 object-cover" />
+            <AvatarFallback className="bg-gray-200 text-gray-500">
+              {tour.agencyName.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
         </div>
       </div>
 
       {/* Tour Info */}
       <div className="mt-6 flex flex-col gap-4">
         <h1 className="text-2xl font-bold">{tour.title}</h1>
-        <Badge className="w-max">{tour.tourTypes[0]?.name || "Sem categoria"}</Badge>
+        <Badge variant={"outline"} className="w-max  text-orange-600 ">{tour.tourTypes[0]?.name || "Sem categoria"}</Badge>
 
         <div className="flex items-center gap-4 text-gray-700">
           <MapPin size={18} />
@@ -61,11 +89,12 @@ export default function TourPage() {
           </span>
         </div>
 
-        <p className="text-gray-600">{tour.description}</p>
-
         <h2 className="text-lg font-semibold text-green-700">
           {new Intl.NumberFormat("pt-AO", { style: "currency", currency: "AOA" }).format(tour.basePrice)}
         </h2>
+        <p>Descrição:</p>
+        <p className="text-gray-600">{tour.description}</p>
+
 
         {/* Botões de Ação */}
         <div className="grid grid-cols-2 gap-4 mt-6">
@@ -73,9 +102,11 @@ export default function TourPage() {
             <Pencil size={18} /> Editar Tour
           </Button>
 
-          <Button className="flex items-center gap-2 bg-orange-600 hover:bg-orange-500">
-            <PlusCircle size={18} /> Adicionar Itinerário
-          </Button>
+          <CreateItineraries tourId={tour.id}>
+            <Button className="flex items-center gap-2 bg-orange-600 hover:bg-orange-500">
+              <PlusCircle size={18} /> Adicionar Itinerário
+            </Button>
+          </CreateItineraries>
 
           <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500">
             <PlusCircle size={18} /> Adicionar Atração Turística
@@ -86,9 +117,49 @@ export default function TourPage() {
           </Button>
         </div>
 
-        <Link href="/tours" className="text-gray-500 mt-6 block text-center underline">
-          Voltar para a lista de tours
-        </Link>
+        {/* Seção de Itinerários */}
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold mb-4">Itinerários</h2>
+          <div className="space-y-4">
+            {fakeItineraries.map((itinerary) => (
+              <div key={itinerary.id} className="border p-4 rounded-md shadow-sm bg-gray-100">
+                <h3 className="text-lg font-medium">{itinerary.title}</h3>
+                <p className="text-sm text-gray-600">{itinerary.description}</p>
+                <p className="text-sm font-semibold mt-2">Duração: {itinerary.duration}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Seção de Pacotes */}
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold mb-4">Pacotes</h2>
+          <div className="space-y-4">
+            {fakePackages.map((pkg) => (
+              <div key={pkg.id} className="border p-4 rounded-md shadow-sm bg-gray-100">
+                <h3 className="text-lg font-medium">{pkg.name}</h3>
+                <p className="text-sm text-gray-600">{pkg.description}</p>
+                <p className="text-sm font-semibold mt-2 text-green-700">
+                  {new Intl.NumberFormat("pt-AO", { style: "currency", currency: "AOA" }).format(pkg.price)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Seção de Atrações Turísticas */}
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold mb-4">Atrações Turísticas</h2>
+          <div className="space-y-4">
+            {fakeAttractions.map((attraction) => (
+              <div key={attraction.id} className="border p-4 rounded-md shadow-sm bg-gray-100">
+                <h3 className="text-lg font-medium">{attraction.name}</h3>
+                <p className="text-sm text-gray-600">{attraction.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
