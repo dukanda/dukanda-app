@@ -78,6 +78,28 @@ export const ToursMutation = () => {
     },
   });
 
+  const addPackagesInTour = useMutation({
+    mutationKey: ['packages'],
+    mutationFn: async (data: PackageToCreate) => {
+      return await toursRoutes.addPackagesInTour(data);
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Sucedido',
+        description: 'Pacote adicionado com sucesso.',
+        duration: 2000,
+      });
+    }
+    ,
+    onError: () => {
+      toast({
+        title: 'Erro',
+        description: ' Ocorreu um erro ao adicionar o pacote.',
+        duration: 2000,
+      });
+    },
+  });
 
-  return { createTours, editTours, addItinerariesInTour, addAttractionsInTour };
+
+  return { createTours, editTours, addItinerariesInTour, addAttractionsInTour, addPackagesInTour };
 };

@@ -84,3 +84,12 @@ interface AttractionToCreate {
   tourId: string; // UUID do tour
   touristAttractionId: string; // UUID da atração turística
 }
+interface PackageToCreate {
+  tourId: string;
+  name: string; 
+  price: number; 
+  benefits: {
+    name: string;
+    description: string; 
+  }[];
+}

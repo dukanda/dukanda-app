@@ -13,6 +13,7 @@ import { pt } from "date-fns/locale";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CreateItineraries } from "./addedItinerariesInTour";
 import { CreateAttractions } from "./addedAttractionsInTour";
+import { CreatePackageInTour } from "./addedPackageInTour";
 
 // Dados fictícios para Itinerários, Pacotes e Atrações Turísticas
 const fakeItineraries = [
@@ -115,10 +116,12 @@ export default function TourPage() {
             </Button>
           </CreateAttractions>
 
+          <CreatePackageInTour tourId={tour.id}>
+            <Button className="flex items-center gap-2 bg-green-700 hover:bg-green-600">
+              <PlusCircle size={18} /> Adicionar Pacote
+            </Button>
+          </CreatePackageInTour>
 
-          <Button className="flex items-center gap-2 bg-green-700 hover:bg-green-600">
-            <PlusCircle size={18} /> Adicionar Pacote
-          </Button>
         </div>
 
         {/* Seção de Itinerários */}
