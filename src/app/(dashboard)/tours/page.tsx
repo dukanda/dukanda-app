@@ -16,6 +16,8 @@ export default function ToursScreen() {
     queryFn: async () => await toursRoutes.getToursMyAgency(),
   });
 
+  console.log(myAgencyTours.data?.items);
+
   return (
     <div className="w-full min-h-screen flex flex-col gap-6 px-4 md:px-8">
       {/* Botão para Criar Passeios */}
@@ -75,7 +77,7 @@ export default function ToursScreen() {
 
                 <div className="flex flex-col gap-3 mt-4">
                   {/* <ToursDetails tourId={tour.id}> */}
-                  <Link href={`/tours/${tour.id}/details`} className="w-full">  
+                  <Link href={`/tours/${tour.id}`} className="w-full">  
                     <Button className="w-full bg-orange-600 hover:bg-orange-500">
                       Ver Detalhes e Editar
                     </Button>
