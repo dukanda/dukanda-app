@@ -1,4 +1,43 @@
+"use client";
+import { AppSidebar } from '@/components/ui/side-bar-ui/app-sidebar-config';
+import Providers from './providers';
+import { SidebarInset, SidebarProvider, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 
+export default function DashboardLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Providers>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarContentWrapper>
+          {children}
+        </SidebarContentWrapper>
+      </SidebarProvider>
+    </Providers>
+  );
+}
+
+function SidebarContentWrapper({ children }: { children: React.ReactNode }) {
+  const { state } = useSidebar();
+
+  return (
+    <SidebarInset
+      className={`flex px-1 transition-all duration-300 ${state === "expanded" ? "" : ""}`}
+    >
+      <header className="flex h-10 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-10">
+        <div className="flex items-center gap-2">
+          <SidebarTrigger />
+        </div>
+      </header>
+      <main>{children}</main>
+    </SidebarInset>
+  );
+}
+
+/*
 import { Analytics } from '@vercel/analytics/react';
 import Providers from './providers';
 import { SearchInput } from './search';
@@ -31,5 +70,4 @@ export default function DashboardLayout({
     </Providers>
   );
 }
-
-
+*/
