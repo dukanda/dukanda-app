@@ -1,41 +1,54 @@
-"use client";
-import { AppSidebar } from '@/components/ui/side-bar-ui/app-sidebar-config';
-import Providers from './providers';
-import { SidebarInset, SidebarProvider, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
+"use client"
+
+import { AppSidebar } from "@/components/ui/side-bar-ui/app-sidebar-config"
+import Providers from "./providers"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
 
 export default function DashboardLayout({
-  children
+  children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <Providers>
       <SidebarProvider>
-        <AppSidebar />
-        <SidebarContentWrapper>
-          {children}
-        </SidebarContentWrapper>
+        <div className="flex h-screen w-full bg-background text-foreground">
+          <AppSidebar />
+          <SidebarContentWrapper>{children}</SidebarContentWrapper>
+        </div>
       </SidebarProvider>
     </Providers>
-  );
+  )
 }
 
 function SidebarContentWrapper({ children }: { children: React.ReactNode }) {
-  const { state } = useSidebar();
+  const { state } = useSidebar()
 
   return (
     <SidebarInset
-      className={`flex px-1 transition-all duration-300 ${state === "expanded" ? "" : ""}`}
+      className={cn(
+        "flex flex-col w-full transition-all duration-300 px-4 py-3",
+        state === "collapsed" && "px-2"
+      )}
     >
-      <header className="flex h-10 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-10">
-        <div className="flex items-center gap-2">
-          <SidebarTrigger />
-        </div>
+      <header className="flex h-12 shrink-0 items-center justify-between border-b border-border px-1 mb-4">
+        <SidebarTrigger />
+        {/* Aqui você pode adicionar botões de ação, busca, etc. */}
       </header>
-      <main>{children}</main>
+
+      <main className="flex-1 overflow-y-auto rounded-lg bg-muted/30 p-4 shadow-inner">
+        {children}
+      </main>
     </SidebarInset>
-  );
+  )
 }
+
 
 /*
 import { Analytics } from '@vercel/analytics/react';
