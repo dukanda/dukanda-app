@@ -31,7 +31,6 @@ interface EditAgencyProps {
 export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
   const updateAgency = AgencyMutation();
   const [image, setImage] = useState<File | null>(agencyData?.Logo || null);
-  const [image, setImage] = useState<File | null>(agencyData?.Logo || null);
   const [formData, setFormData] = useState<TourAgencyToCreate>(agencyData || {
       Name: "",
       Description: "",
@@ -54,7 +53,6 @@ export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
     e.preventDefault();
     const payload = {
       ...formData,
-      Logo: image,
       Logo: image,
     };
     console.log("Atualizando dados:", payload);

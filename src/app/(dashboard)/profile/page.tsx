@@ -6,7 +6,6 @@ import Image from "next/image";
 import { authRoutes } from "@/api/routes/Auth/index.routes";
 import { useQuery } from "@tanstack/react-query";
 
-// Componente reutilizável para exibição de informações
 function InfoDisplay({ label, value }: { label: string; value?: string }) {
   return (
     <div className="flex flex-col gap-1">
