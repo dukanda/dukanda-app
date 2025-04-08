@@ -31,6 +31,7 @@ interface EditAgencyProps {
 export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
   const updateAgency = AgencyMutation();
   const [image, setImage] = useState<File | null>(agencyData?.Logo || null);
+  const [image, setImage] = useState<File | null>(agencyData?.Logo || null);
   const [formData, setFormData] = useState<TourAgencyToCreate>(agencyData || {
       Name: "",
       Description: "",
@@ -53,6 +54,7 @@ export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
     e.preventDefault();
     const payload = {
       ...formData,
+      Logo: image,
       Logo: image,
     };
     console.log("Atualizando dados:", payload);
@@ -168,6 +170,12 @@ export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
           {/* Logo */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="logo">Logo da Agência</Label>
+            <ImageUploader setImageUrl={(url: string) => {
+              console.log("Received image URL:", url);
+              // Convert the URL to a File or handle it as needed
+              const file = null; // Replace this with logic to convert URL to File if applicable
+              setImage(file);
+            }} />
             <ImageUploader setImageUrl={(url: string) => {
               console.log("Received image URL:", url);
               // Convert the URL to a File or handle it as needed

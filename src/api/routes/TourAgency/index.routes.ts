@@ -1,18 +1,5 @@
 import { api } from "@/api/axios.config";
 
-interface TourAgency {
-  userId: string;
-  name: string;
-  description: string;
-  contactEmail: string;
-  contactPhone: string;
-  address: string;
-  agencyType: string;
-  isVerified: boolean;
-  logoUrl: string;
-  tourAgencyTypeId: number;
-  toursCount: number;
-}
 
 class ToursAgenciesRoutes {
 

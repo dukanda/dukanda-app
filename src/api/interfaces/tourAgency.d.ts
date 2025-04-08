@@ -21,3 +21,17 @@ interface TourAgencyToCreate2 {
   agencyType: string,
   toursCount: number
 }
+
+interface TourAgency {
+  userId: string;
+  name: string;
+  description: string;
+  contactEmail: string;
+  contactPhone: string;
+  address: string;
+  agencyType: string;
+  isVerified: boolean;
+  logoUrl: string;
+  tourAgencyTypeId: number;
+  toursCount: number;
+}
