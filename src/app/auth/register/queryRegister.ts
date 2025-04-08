@@ -2,9 +2,11 @@
 import { authRoutes } from "@/api/routes/Auth/index.routes";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export const RegisterMutation = (setFormData: React.Dispatch<React.SetStateAction<{ email: string; password: string; name: string; phoneNumber: string }>>) => {
   const { toast } = useToast();
+  const router = useRouter();
 
   const register = useMutation({
     mutationKey: ['register'],
@@ -18,6 +20,7 @@ export const RegisterMutation = (setFormData: React.Dispatch<React.SetStateActio
         duration: 2000,
       });
       setFormData({ email: '', password: '', name: '', phoneNumber: '' });
+      router.push('/auth/login');
     },
     onError: () => {
       toast({
