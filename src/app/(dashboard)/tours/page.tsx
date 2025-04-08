@@ -35,7 +35,6 @@ export default function ToursScreen() {
         </CreateTours>
       </div>
 
-      {/* Estados de carregamento / vazio / grid */}
       {myAgencyTours.isLoading ? (
         <div className="flex justify-center items-center h-96">
           <Loader2 className="animate-spin text-muted-foreground" size={32} />

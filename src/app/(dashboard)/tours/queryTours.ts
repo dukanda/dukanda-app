@@ -34,6 +34,22 @@ export const ToursMutation = () => {
     mutationFn: async ({ tourId, formData }: { tourId: string; formData: TourEdit }) => {
       return await toursRoutes.editTours(tourId, formData);
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+      toast({
+        title: 'Sucedido',
+        description: 'A Passeio foi editada com sucesso.',
+        duration: 2000,
+      });
+    }
+    ,
+    onError: () => {
+      toast({
+        title: 'Erro',
+        description: ' Ocorreu um erro ao editar a tour.',
+        duration: 2000,
+      });
+    },
   });
 
 
