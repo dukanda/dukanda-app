@@ -1,3 +1,4 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import {
@@ -9,8 +10,10 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import { useAuthStore } from '@/module/zustand-auth-store';
 
-export async function DropdownMenuUser() {
+export function DropdownMenuUser() {
+  const { logout } = useAuthStore();
 
   return (
     <DropdownMenu>
@@ -38,11 +41,9 @@ export async function DropdownMenuUser() {
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <Link href={"/auth/login"} passHref className='cursor-pointer'>
-          <DropdownMenuItem className='cursor-pointer'>
-            Sair
-          </DropdownMenuItem>
-        </Link>
+        <DropdownMenuItem onClick={logout} className='cursor-pointer'>
+          Sair
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,16 +1,19 @@
 "use client";
 import { toursRoutes } from "@/api/routes/Tours/index.routes";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation, } from "@tanstack/react-query";
+import { useMutation, useQueryClient, } from "@tanstack/react-query";
 
 export const ToursMutation = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  
   const createTours = useMutation({
     mutationKey: ['tours'],
     mutationFn: async (formData: TourToCreate) => {
       return await toursRoutes.createTours(formData);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries();
       toast({
         title: 'Sucedido',
         description: 'A Passeio foi criada com sucesso.',
@@ -40,6 +43,7 @@ export const ToursMutation = () => {
       return await toursRoutes.addItinerariesInTour(tourId, data);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries();
       toast({
         title: 'Sucedido',
         description: 'O itinerário foi adicionado com sucesso.',
@@ -62,6 +66,7 @@ export const ToursMutation = () => {
       return await toursRoutes.addAttractionsInTour(tourId, data);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries();
       toast({
         title: 'Sucedido',
         description: 'Atração adicionada com sucesso.',
@@ -84,6 +89,7 @@ export const ToursMutation = () => {
       return await toursRoutes.addPackagesInTour(data);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries();
       toast({
         title: 'Sucedido',
         description: 'Pacote adicionado com sucesso.',
