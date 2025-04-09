@@ -14,6 +14,7 @@ import Image from 'next/image'
 import { Label } from '@/components/ui/label'
 import { RegisterMutation } from './queryRegister'
 import Link from 'next/link'
+import dukanda from '@/app/auth/dukanda.png';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ export default function Register() {
         {/* Logo */}
         <div className="w-full md:w-1/2 flex justify-center md:justify-start">
           <Image
-            src="/dukanda.png"
+            src={dukanda}
             alt="Dukanda Logo"
             width={200}
             height={200}

@@ -5,8 +5,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata = {
-  title: 'Dukanda App - Agents of Tourism',
-  description: 'Dukanda App is a platform that connects tourists with local guides, providing a unique experience for both.',
+  title: 'Dukanda App -Agentes de Turismo',
+  description: 'Dukanda App é uma plataforma que conecta turistas com agentes de turismo, proporcionando uma experiência exclusiva para ambos.',
 };
 
 export default function RootLayout({

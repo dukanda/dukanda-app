@@ -32,8 +32,8 @@ interface Tour {
   title: string;
   description: string;
   basePrice: number;
-  startDate: string; // formato ISO 8601 vindo da API
-  endDate: string;   // formato ISO 8601 vindo da API
+  startDate: string;
+  endDate: string;  
   cityName: string;
   tourTypes: { id: number; name: string }[];
 }

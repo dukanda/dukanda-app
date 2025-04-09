@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label'
 import { LoginMutation } from './queryLogin'
 import Link from 'next/link'
 import Image from 'next/image'
+import dukanda from '@/app/auth/dukanda.png';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ email: '', password: '' })
@@ -34,7 +35,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="w-full md:w-1/2 flex justify-center md:justify-start">
           <Image
-            src="/dukanda.png"
+            src={dukanda}
             alt="Dukanda Logo"
             width={200}
             height={200}

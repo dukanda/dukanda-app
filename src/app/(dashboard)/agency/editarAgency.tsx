@@ -55,7 +55,6 @@ export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
       ...formData,
       Logo: image,
     };
-    console.log("Atualizando dados:", payload);
     await updateAgency.mutate(payload);
   };
 

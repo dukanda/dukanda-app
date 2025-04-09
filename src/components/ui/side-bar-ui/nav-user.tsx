@@ -22,6 +22,7 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { authRoutes } from "@/api/routes/Auth/index.routes"
 import { useAuthStore } from "@/module/zustand-auth-store"
+import Link from "next/link"
 
 export function NavUser() {
   const { logout } = useAuthStore()
@@ -63,22 +64,24 @@ export function NavUser() {
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0">
-              <div className="flex items-center gap-2 px-3 py-2">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src={userData?.avatarUrl || "https://github.com/dukanda.png"}
-                  />
-                  <AvatarFallback>{userData?.name?.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div className="text-sm">
-                  <div className="font-semibold">{userData?.name}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {userData?.email}
+            <Link href="/profile" passHref>
+              <DropdownMenuLabel className="p-0">
+                <div className="flex items-center gap-2 px-3 py-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage
+                      src={userData?.avatarUrl || "https://github.com/dukanda.png"}
+                    />
+                    <AvatarFallback>{userData?.name?.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="text-sm">
+                    <div className="font-semibold">{userData?.name}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {userData?.email}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </DropdownMenuLabel>
+              </DropdownMenuLabel>
+            </Link>
 
             <DropdownMenuSeparator />
 

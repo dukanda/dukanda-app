@@ -34,7 +34,7 @@ interface CreateToursProps {
 
 export const CreateTours = ({ children }: CreateToursProps) => {
   const toursMutation = ToursMutation();
-  const [isOpen, setIsOpen] = useState(false); // Controle do Dialog
+  const [isOpen, setIsOpen] = useState(false); 
 
   const [image, setImage] = useState<File | null>(null);
   const [cityId, setCityId] = useState<number | null>(null);
