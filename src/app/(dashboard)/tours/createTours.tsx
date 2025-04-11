@@ -49,17 +49,8 @@ export const CreateTours = ({ children }: CreateToursProps) => {
     queryFn: toursTypeRoutes.getToursTypes,
   });
 
-  const cityItems =
-    citiesData?.data.items.map((city) => ({
-      value: city.id.toString(),
-      label: city.name,
-    })) || [];
-
-  const tourTypeItems =
-    tourTypesData?.items.map((tourType) => ({
-      value: tourType.id.toString(),
-      label: tourType.name,
-    })) || [];
+  const cityOptions = citiesData?.data.items.map((city) => city.name) || [];
+  const tourTypeOptions = tourTypesData?.items.map((tourType) => tourType.name) || [];
 
   const resetForm = () => {
     setTitle("");
@@ -162,9 +153,12 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           <div>
             <Label htmlFor="cityId">Cidade</Label>
             <Combobox
-              items={cityItems}
-              selectedValue={cityId?.toString() || ""}
-              onValueChange={(value) => setCityId(Number(value))}
+              options={cityOptions}
+              value={cityId ? citiesData?.data.items.find((city) => city.id === cityId)?.name || "" : ""}
+              onChange={(value) => {
+                const selectedCity = citiesData?.data.items.find((city) => city.name === value);
+                setCityId(selectedCity ? selectedCity.id : null);
+              }}
               placeholder="Selecione a cidade"
             />
           </div>
@@ -173,9 +167,12 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           <div>
             <Label htmlFor="tourTypeIds">Tipo de Passeio</Label>
             <Combobox
-              items={tourTypeItems}
-              selectedValue={tourTypeIds?.toString() || ""}
-              onValueChange={(value) => setTourTypeIds(Number(value))}
+              options={tourTypeOptions}
+              value={tourTypeIds ? tourTypesData?.items.find((tourType) => tourType.id === tourTypeIds)?.name || "" : ""}
+              onChange={(value) => {
+                const selectedTourType = tourTypesData?.items.find((tourType) => tourType.name === value);
+                setTourTypeIds(selectedTourType ? selectedTourType.id : null);
+              }}
               placeholder="Selecione o tipo de passeio"
             />
           </div>

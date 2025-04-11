@@ -60,15 +60,8 @@ export const EditTours = ({ children, tour }: EditToursProps) => {
     queryFn: toursTypeRoutes.getToursTypes,
   });
 
-  const cityItems = citiesData?.data.items.map((city) => ({
-    value: city.id.toString(),
-    label: city.name,
-  })) || [];
-
-  const tourTypeItems = tourTypesData?.items.map((tourType) => ({
-    value: tourType.id.toString(),
-    label: tourType.name,
-  })) || [];
+  const cityOptions = citiesData?.data.items.map((city) => city.name) || [];
+  const tourTypeOptions = tourTypesData?.items.map((tourType) => tourType.name) || [];
 
   useEffect(() => {
     if (tour) {
@@ -183,9 +176,12 @@ export const EditTours = ({ children, tour }: EditToursProps) => {
           <div>
             <Label htmlFor="cityName">Cidade</Label>
             <Combobox
-              items={cityItems}
-              selectedValue={cityName.toString()}
-              onValueChange={(value) => setCityName(Number(value))}
+              options={cityOptions}
+              value={cityName ? citiesData?.data.items.find((city) => city.id === cityName)?.name || "" : ""}
+              onChange={(value) => {
+                const selectedCity = citiesData?.data.items.find((city) => city.name === value);
+                setCityName(selectedCity ? selectedCity.id : 0);
+              }}
               placeholder="Selecione a cidade"
             />
           </div>
@@ -194,9 +190,12 @@ export const EditTours = ({ children, tour }: EditToursProps) => {
           <div>
             <Label htmlFor="tourTypeId">Tipo de Passeio</Label>
             <Combobox
-              items={tourTypeItems}
-              selectedValue={tourTypeId?.toString() || ""}
-              onValueChange={(value) => setTourTypeId(Number(value))}
+              options={tourTypeOptions}
+              value={tourTypeId ? tourTypesData?.items.find((tourType) => tourType.id === tourTypeId)?.name || "" : ""}
+              onChange={(value) => {
+                const selectedTourType = tourTypesData?.items.find((tourType) => tourType.name === value);
+                setTourTypeId(selectedTourType ? selectedTourType.id : null);
+              }}
               placeholder="Selecione o tipo de passeio"
             />
           </div>

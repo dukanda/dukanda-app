@@ -39,6 +39,8 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
     { value: "2", label: "Agência de Turismo" },
   ];
 
+  const agencyTypeOptions = agencyTypes.map((type) => type.label);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -144,14 +146,15 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
           <div className="flex flex-col gap-1">
             <Label htmlFor="TourAgencyTypeId">Tipo de Agência</Label>
             <Combobox
-              items={agencyTypes}
-              selectedValue={formData.TourAgencyTypeId.toString()}
-              onValueChange={(value) =>
+              options={agencyTypeOptions}
+              value={formData.TourAgencyTypeId ? agencyTypes.find((type) => type.value === formData.TourAgencyTypeId.toString())?.label || "" : ""}
+              onChange={(value) => {
+                const selectedType = agencyTypes.find((type) => type.label === value);
                 setFormData((prev) => ({
                   ...prev,
-                  TourAgencyTypeId: Number(value),
-                }))
-              }
+                  TourAgencyTypeId: selectedType ? Number(selectedType.value) : 0,
+                }));
+              }}
               placeholder="Selecione o tipo"
             />
           </div>
