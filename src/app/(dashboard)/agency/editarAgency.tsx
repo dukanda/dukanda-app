@@ -173,12 +173,6 @@ export const EditAgency = ({ children, agencyData }: EditAgencyProps) => {
               const file = null; // Replace this with logic to convert URL to File if applicable
               setImage(file);
             }} />
-            <ImageUploader setImageUrl={(url: string) => {
-              console.log("Received image URL:", url);
-              // Convert the URL to a File or handle it as needed
-              const file = null; // Replace this with logic to convert URL to File if applicable
-              setImage(file);
-            }} />
           </div>
 
           {/* Botão de atualização */}
