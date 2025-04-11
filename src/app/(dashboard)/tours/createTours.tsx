@@ -13,13 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox } from "@/components/ui/combobox";
 import { ToursMutation } from "./queryTours";
 import { addDays } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
@@ -54,6 +48,18 @@ export const CreateTours = ({ children }: CreateToursProps) => {
     queryKey: ["toursTypes"],
     queryFn: toursTypeRoutes.getToursTypes,
   });
+
+  const cityItems =
+    citiesData?.data.items.map((city) => ({
+      value: city.id.toString(),
+      label: city.name,
+    })) || [];
+
+  const tourTypeItems =
+    tourTypesData?.items.map((tourType) => ({
+      value: tourType.id.toString(),
+      label: tourType.name,
+    })) || [];
 
   const resetForm = () => {
     setTitle("");
@@ -155,43 +161,23 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           {/* Cidade */}
           <div>
             <Label htmlFor="cityId">Cidade</Label>
-            <Select
+            <Combobox
+              items={cityItems}
+              selectedValue={cityId?.toString() || ""}
               onValueChange={(value) => setCityId(Number(value))}
-              disabled={toursMutation.createTours.isPending}
-              required
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione a cidade" />
-              </SelectTrigger>
-              <SelectContent>
-                {citiesData?.data.items.map((city) => (
-                  <SelectItem key={city.id} value={city.id.toString()}>
-                    {city.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              placeholder="Selecione a cidade"
+            />
           </div>
 
           {/* Tipos de Passeio */}
           <div>
             <Label htmlFor="tourTypeIds">Tipo de Passeio</Label>
-            <Select
+            <Combobox
+              items={tourTypeItems}
+              selectedValue={tourTypeIds?.toString() || ""}
               onValueChange={(value) => setTourTypeIds(Number(value))}
-              disabled={toursMutation.createTours.isPending}
-              required
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione o tipo de passeio" />
-              </SelectTrigger>
-              <SelectContent>
-                {tourTypesData?.items.map((tourType) => (
-                  <SelectItem key={tourType.id} value={tourType.id.toString()}>
-                    {tourType.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              placeholder="Selecione o tipo de passeio"
+            />
           </div>
 
           {/* Upload de Imagem */}

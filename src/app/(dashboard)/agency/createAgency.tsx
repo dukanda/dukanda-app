@@ -12,13 +12,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox } from "@/components/ui/combobox";
 import { AgencyMutation } from "./queryAgency";
 import { Loader2 } from "lucide-react";
 import UploadArea from "@/components/upload-area";
@@ -29,7 +23,7 @@ interface CreateAgencyProps {
 
 export const CreateAgency = ({ children }: CreateAgencyProps) => {
   const createAgency = AgencyMutation();
-   const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File | null>(null);
   const [formData, setFormData] = useState<TourAgencyToCreate>({
     Name: "",
     Description: "",
@@ -39,6 +33,11 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
     Logo: null,
     TourAgencyTypeId: 0,
   });
+
+  const agencyTypes = [
+    { value: "1", label: "Guia Turístico" },
+    { value: "2", label: "Agência de Turismo" },
+  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -144,28 +143,23 @@ export const CreateAgency = ({ children }: CreateAgencyProps) => {
           {/* Tipo de Agência */}
           <div className="flex flex-col gap-1">
             <Label htmlFor="TourAgencyTypeId">Tipo de Agência</Label>
-            <Select
+            <Combobox
+              items={agencyTypes}
+              selectedValue={formData.TourAgencyTypeId.toString()}
               onValueChange={(value) =>
                 setFormData((prev) => ({
                   ...prev,
                   TourAgencyTypeId: Number(value),
                 }))
               }
-            >
-              <SelectTrigger className="w-full ring-0 focus:ring-2 focus:ring-orange-500">
-                <SelectValue placeholder="Selecione o tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Guia Turístico</SelectItem>
-                <SelectItem value="2">Agência de Turismo</SelectItem>
-              </SelectContent>
-            </Select>
+              placeholder="Selecione o tipo"
+            />
           </div>
 
           {/* Logo */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="logo">Logo da Agência</Label>
-             <UploadArea onChange={(file) => setImage(file)} />
+            <UploadArea onChange={(file) => setImage(file)} />
           </div>
 
           {/* Botão de envio */}

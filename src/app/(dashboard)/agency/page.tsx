@@ -31,6 +31,8 @@ export default function Agency() {
   const getTourAgencies = useQuery({
     queryKey: ['agencies'],
     queryFn: async () => await toursAgenciesRoutes.getTourAgencyById(userData?.id),
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   })
 
   const agency = getTourAgencies.data
