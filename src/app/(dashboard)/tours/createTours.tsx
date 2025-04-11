@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { DatePickerWithRange } from "@/components/ui/datePickerRanger";
 import {
   Select,
   SelectContent,
@@ -27,6 +26,7 @@ import { useQuery } from "@tanstack/react-query";
 import { citiesRoutes } from "@/api/routes/Cities/index.routes";
 import { toursTypeRoutes } from "@/api/routes/ToursType";
 import UploadArea from "@/components/upload-area";
+import { DatePicker } from "@/components/ui/datePicker";
 
 interface CreateToursProps {
   children?: React.ReactNode;
@@ -34,7 +34,7 @@ interface CreateToursProps {
 
 export const CreateTours = ({ children }: CreateToursProps) => {
   const toursMutation = ToursMutation();
-  const [isOpen, setIsOpen] = useState(false); 
+  const [isOpen, setIsOpen] = useState(false);
 
   const [image, setImage] = useState<File | null>(null);
   const [cityId, setCityId] = useState<number | null>(null);
@@ -88,7 +88,7 @@ export const CreateTours = ({ children }: CreateToursProps) => {
   return (
     <Dialog modal open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-full max-w-lg h-full sm:h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden rounded-lg">
+      <DialogContent className="w-full max-w-xl h-full sm:h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">Criar Novo Tour</DialogTitle>
           <DialogDescription>Preencha os detalhes abaixo para criar um novo tour.</DialogDescription>
@@ -140,14 +140,16 @@ export const CreateTours = ({ children }: CreateToursProps) => {
           </div>
 
           {/* Datas */}
-          <div>
-            <Label>Datas do Passeio</Label>
-            <DatePickerWithRange
-              onDateChange={({ startDate, endDate }) => {
-                setStartDate(startDate || new Date());
-                setEndDate(endDate || addDays(new Date(), 10));
-              }}
-            />
+          <div className="flex justify-between gap-4">
+            <div>
+              <Label>Data de início</Label>
+              <DatePicker selectedDate={startDate} onDateChange={(date) => setStartDate(date || new Date())} />
+            </div>
+
+            <div>
+              <Label>Data de término</Label>
+              <DatePicker selectedDate={endDate} onDateChange={(date) => setEndDate(date || new Date())} />
+            </div>
           </div>
 
           {/* Cidade */}

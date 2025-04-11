@@ -57,6 +57,13 @@ export default function UploadArea({
     [props, setPropsPreview, onChange]
   );
 
+  const handleRemoveFile = useCallback(() => {
+    setPreview(null);
+    setFile(null);
+    props?.onChange(null);
+    setPropsPreview?.("");
+  }, [props, setPropsPreview]);
+
   useEffect(() => {
     return () => {
       if (preview) {
@@ -179,6 +186,18 @@ export default function UploadArea({
             </p>
           )}
         </div>
+      )}
+      {preview && (
+        <Button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleRemoveFile();
+          }}
+          className="mt-2 bg-red-500 text-white rounded-md px-4 py-2"
+        >
+          Remover
+        </Button>
       )}
       {file?.name}
     </div>

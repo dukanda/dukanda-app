@@ -14,39 +14,33 @@ import {
 } from "@/components/ui/popover"
 
 interface DatePickerProps {
-  selectedDate: Date | undefined;
-  onDateChange: (date: Date | undefined) => void;
+  selectedDate: Date
+  onDateChange: (date: Date | undefined) => void
 }
 
-export function DatePicker({ selectedDate, onDateChange }: DatePickerProps) {
-  const [date, setDate] = React.useState<Date | undefined>(selectedDate);
-
-  React.useEffect(() => {
-    onDateChange(date); // Atualiza a data no componente pai
-  }, [date, onDateChange]);
-
+export const DatePicker = ({ selectedDate, onDateChange }: DatePickerProps) => {
   return (
-    <Popover modal>
+    <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
-            "w-[240px] justify-start text-left font-normal flex gap-2",
-            !date && "text-muted-foreground"
+            "w-[240px] justify-start text-left font-normal",
+            !selectedDate && "text-muted-foreground"
           )}
         >
-          <CalendarIcon size={18} className="text-gray-600" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {selectedDate ? format(selectedDate, "PPP") : <span>Escolha uma data</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
-          selected={date}
-          onSelect={setDate}
+          selected={selectedDate}
+          onSelect={onDateChange}
           initialFocus
         />
       </PopoverContent>
     </Popover>
-  );
+  )
 }
